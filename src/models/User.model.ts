@@ -21,6 +21,9 @@ export interface User extends Document {
         lat: number;
         lng: number;
     },
+    isVerified?: boolean;
+    verifyCode?: number;
+    verifyCodeExpiry?: Date;
 }
 
 const UserSchema: Schema<User> = new Schema({
@@ -59,6 +62,15 @@ const UserSchema: Schema<User> = new Schema({
         lat: {type: Number},
         lng: {type: Number},
     },
+    isVerified: {
+        type: Boolean,
+    },
+    verifyCode: {
+        type: Number,
+    },
+    verifyCodeExpiry: {
+        type: Date
+    }
 },{timestamps: true})
 
 const User = (mongoose.models.User as mongoose.Model<User>) || mongoose.model<User>("User", UserSchema)
