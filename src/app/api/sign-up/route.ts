@@ -5,16 +5,27 @@ import dbConnect from "@/lib/dbConnect";
 import User from "@/models/User.model";
 import bcrypt from "bcrypt";
 import { NextRequest, NextResponse } from "next/server";
+import { SignupSchema } from "@/schemas/SignupSchema";
 
-export async function POST(req: NextRequest) {
+export async function POST(req: NextRequest){
     try {
         await dbConnect();
 
-        const {username, email, password} = await req.json();
+        const body = await req.json();
 
-        if(!username || !email || !password){
-            throw new ApiError(400, "Username, Email and Password is required");
+        const parsed = SignupSchema.safeParse(body);
+
+        if(!parsed.success){
+            const validationError = parsed.error?.issues?.map((error) => error?.message);
+            throw new ApiError(
+                400, 
+                validationError.length > 0 
+                    ? validationError.join(', ')
+                    : "Invalid Input format"
+            )
         }
+
+        const {username, email, password} = parsed.data;
 
         const existingUser = await User.findOne({email});
 
