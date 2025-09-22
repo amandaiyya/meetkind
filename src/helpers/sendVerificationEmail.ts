@@ -1,4 +1,4 @@
-import VerificationEmail from '@/emails/VerificationEmail';
+import VerificationEmail from '../../emails/VerificationEmail';
 import { resend } from '@/lib/resend';
 
 export async function sendVerificationEmail(
@@ -17,6 +17,6 @@ export async function sendVerificationEmail(
     return { success: true, message: "verification email sent successfully."};
   } catch (error) {
     console.error('Error sending verification email:', error)
-    return Response.json({ error }, { status: 500 });
+    return { success: false, message: "Failed to send verification email."};
   }
 }
