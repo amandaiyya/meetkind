@@ -16,12 +16,13 @@ export async function POST(req: NextRequest){
         const parsed = SignupSchema.safeParse(body);
 
         if(!parsed.success){
-            const validationError = parsed.error?.issues?.map((error) => error?.message);
+            const validationError = parsed.error?.issues?.map((error) => error?.message) || [];
+            
             throw new ApiError(
                 400, 
                 validationError.length > 0 
                     ? validationError.join(', ')
-                    : "Invalid Input format"
+                    : "Invalid parameters"
             )
         }
 
@@ -29,7 +30,7 @@ export async function POST(req: NextRequest){
 
         const existingUser = await User.findOne({email});
 
-        const verifyCode = Math.floor(100000 + Math.random() * 900000);
+        const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
 
         if(existingUser){
             if(existingUser.isVerified){
@@ -65,7 +66,7 @@ export async function POST(req: NextRequest){
         const emailResponse = await sendVerificationEmail(
             email,
             username,
-            verifyCode.toString()
+            verifyCode
         )
 
         if(!emailResponse.success){
