@@ -21,7 +21,7 @@ export interface User extends Document {
         lat: number;
         lng: number;
     },
-    isVerified?: boolean;
+    isVerified: boolean;
     verifyCode?: string;
     verifyCodeExpiry?: Date;
 }
@@ -64,6 +64,8 @@ const UserSchema: Schema<User> = new Schema({
     },
     isVerified: {
         type: Boolean,
+        required: [true, "isVerified is required"],
+        default: false,
     },
     verifyCode: {
         type: String,

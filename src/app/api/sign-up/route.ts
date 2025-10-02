@@ -55,6 +55,8 @@ export async function POST(req: NextRequest){
                 username,
                 email,
                 password: hashedPassword,
+                oauthProvider: null,
+                oauthProviderId: null,
                 isVerified: false,
                 verifyCode,
                 verifyCodeExpiry
