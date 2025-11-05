@@ -11,19 +11,19 @@ export type Address = {
 
 export interface User extends Document {
     username: string,
-    email?: string,
-    password?: string,
-    oauthProvider?: string,
-    oauthProviderId?: string,
-    avatar?: string,
-    address?: Address,
+    email: string,
+    password?: string | null,
+    oauthProvider?: string | null,
+    oauthProviderId?: string | null,
+    avatar?: string | null,
+    address?: Address | null,
     location?: {
         lat: number;
         lng: number;
     },
     isVerified: boolean;
-    verifyCode?: string;
-    verifyCodeExpiry?: Date;
+    verifyCode?: string | undefined;
+    verifyCodeExpiry?: Date | undefined;
 }
 
 const UserSchema: Schema<User> = new Schema({
@@ -45,7 +45,6 @@ const UserSchema: Schema<User> = new Schema({
     },
     oauthProviderId: {
         type: String,
-        unique: true,
     },
     avatar: {
         type: String,
@@ -74,6 +73,11 @@ const UserSchema: Schema<User> = new Schema({
         type: Date
     }
 },{timestamps: true})
+
+UserSchema.index(
+    { oauthProviderId: 1 },
+    { unique: true, partialFilterExpression: { oauthProviderId: { $type: "string" } } }
+  );
 
 const User = (mongoose.models.User as mongoose.Model<User>) || mongoose.model<User>("User", UserSchema)
 

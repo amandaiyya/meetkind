@@ -1,6 +1,6 @@
 import ApiError from "@/lib/apiError";
 import dbConnect from "@/lib/dbConnect";
-import User from "@/models/User.model";
+import User, { User as UserInterface } from "@/models/User.model";
 import NextAuth from "next-auth";
 import credentials from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
@@ -111,13 +111,37 @@ export const { handlers } = NextAuth({
                 existingUser = await User.create({
                     username: profile?.name,
                     email: profile?.email,
+                    password: null,
                     avatar: profile?.picture,
                     oauthProvider: "google",
                     oauthProviderId: profile?.sub,
                     isVerified: true, 
+                    location: null,
+                    address: null
                 })
             }
 
+            if(!existingUser.oauthProviderId && existingUser.isVerified) {
+                existingUser.oauthProvider = "google";
+                existingUser.oauthProviderId = profile?.sub as string;
+                existingUser.avatar = profile?.picture;
+
+                await existingUser.save();
+            }
+
+            if(!existingUser.isVerified) {
+                existingUser.username = profile?.name as string;
+                existingUser.password = null;
+                existingUser.oauthProvider = "google";
+                existingUser.oauthProviderId = profile?.sub as string;
+                existingUser.avatar = profile?.picture;
+                existingUser.isVerified = true;
+                existingUser.verifyCode = undefined;
+                existingUser.verifyCodeExpiry = undefined;
+
+                await existingUser.save();
+            }
+            
             user._id = existingUser._id as string;
             user.username = existingUser.username as string;
             user.email = existingUser.email as string;
@@ -133,7 +157,8 @@ export const { handlers } = NextAuth({
     },
   },
   pages: {
-    signIn: "/sign-in"
+    signIn: "/sign-in",
+    error: "/error"
   },
   session: {
     strategy: "jwt"

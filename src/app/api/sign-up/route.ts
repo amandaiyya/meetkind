@@ -33,17 +33,27 @@ export async function POST(req: NextRequest){
         const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
 
         if(existingUser){
-            if(existingUser.isVerified){
+            if(!existingUser.oauthProviderId && existingUser.isVerified) {
                 return NextResponse.json(
                     new ApiResponse(400, null, "User already exists with this email"),
                     { status: 400 }
                 );
-            } else {
+            } 
+
+            if(!existingUser.isVerified) {
                 const hashedPassword = await bcrypt.hash(password, 10);
 
                 existingUser.password = hashedPassword;
                 existingUser.verifyCode = verifyCode;
                 existingUser.verifyCodeExpiry = new Date(Date.now() + 3600000);
+
+                await existingUser.save();
+            }
+
+            if(existingUser.oauthProvider === "google") {
+                const hashedPassword = await bcrypt.hash(password, 10);
+
+                existingUser.password = hashedPassword;
 
                 await existingUser.save();
             }
@@ -57,6 +67,8 @@ export async function POST(req: NextRequest){
                 password: hashedPassword,
                 oauthProvider: null,
                 oauthProviderId: null,
+                location: null,
+                address: null,
                 isVerified: false,
                 verifyCode,
                 verifyCodeExpiry
