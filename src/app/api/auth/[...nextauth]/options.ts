@@ -28,7 +28,7 @@ export const { handlers } = NextAuth({
 
                 const user = await User.findOne({
                     email,
-                    oauthProvider: null
+                    password: { $ne: null}
                 })
 
                 if(!user) {

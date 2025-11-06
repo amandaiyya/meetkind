@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { SignupSchema } from '@/schemas/SignupSchema';
 import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import Button from '@/components/Button';
 import Link from 'next/link';
 import React from 'react';
@@ -11,6 +12,8 @@ import axios from "axios";
 import * as z from "zod";
 
 function SignupPage() {
+  const router = useRouter();
+
   const {
     register, 
     handleSubmit, 
@@ -24,8 +27,9 @@ function SignupPage() {
     try {
       const {data} = await axios.post('/api/sign-up',body);
       if(data.success) {
-        console.log(data.message);
         reset();
+        console.log(data.message);
+        router.replace('/sign-in');
       }
     } catch (error) {
       if(axios.isAxiosError(error)) {
