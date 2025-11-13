@@ -17,7 +17,8 @@ function SignupPage() {
   const {
     register, 
     handleSubmit, 
-    reset, 
+    reset,
+    getValues,
     formState: {errors, isSubmitting}
   } = useForm<z.infer<typeof SignupSchema>>({
     resolver: zodResolver(SignupSchema)
@@ -27,9 +28,10 @@ function SignupPage() {
     try {
       const {data} = await axios.post('/api/sign-up',body);
       if(data.success) {
+        const email = encodeURIComponent(getValues("email"));
         reset();
         console.log(data.message);
-        router.replace('/sign-in');
+        router.replace(`/verify-user?email=${email}`);
       }
     } catch (error) {
       if(axios.isAxiosError(error)) {

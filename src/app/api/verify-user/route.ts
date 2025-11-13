@@ -33,10 +33,10 @@ export async function POST(req: NextRequest){
         }
 
         if(!user.verifyCodeExpiry) {
-            throw new ApiError(400, "Verification code has no expiry");
+            throw new ApiError(400, "Already verified");
         }
 
-        const isVerifyCodeValid = user.verifyCode === verifyCode;
+        const isVerifyCodeValid = user.verifyCode === verifyCode.join("");
         const isVerifyCodeNotExpired = new Date(user.verifyCodeExpiry) > new Date();
 
         if(isVerifyCodeValid && isVerifyCodeNotExpired) {
