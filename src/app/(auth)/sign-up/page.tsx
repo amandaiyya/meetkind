@@ -7,12 +7,14 @@ import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Button from '@/components/Button';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import axios from "axios";
 import * as z from "zod";
 
 function SignupPage() {
   const router = useRouter();
+
+  const [passwordVisibility, setPasswordVisibility] = useState(false);
 
   const {
     register, 
@@ -70,6 +72,7 @@ function SignupPage() {
                 </div>
                 <div className="w-[1.5px] h-5 bg-dark-secondary"></div>
                 <input 
+                  type="text"
                   {...register("username")}
                   className="flex-1 outline-none font-semibold" 
                   placeholder="enter your username"
@@ -85,6 +88,7 @@ function SignupPage() {
                 </div>
                 <div className="w-[1.5px] h-5 bg-dark-secondary"></div>
                 <input 
+                  type="email"
                   {...register("email")}
                   className="flex-1 outline-none font-semibold" 
                   placeholder="enter your email"
@@ -95,11 +99,16 @@ function SignupPage() {
             <div>
               <label className="font-semibold mb-3">Password</label>
               <div className="border-2 rounded-sm py-1 px-2 mt-1 flex flex-wrap items-center gap-2">
-                <div className="w-5">
-                  <img src="/Eye.svg" alt="meetkind" />
+                <div 
+                  role="button"
+                  onClick={() => setPasswordVisibility(!passwordVisibility)}
+                  className="w-5 cursor-pointer"
+                >
+                  <img src={passwordVisibility ? "/Eye-close.svg" : "/Eye.svg"} alt="meetkind" />
                 </div>
                 <div className="w-[1.5px] h-5 bg-dark-secondary"></div>
                 <input 
+                  type={passwordVisibility ? "text" : "password"}
                   {...register("password")}
                   className="flex-1 outline-none font-semibold" 
                   placeholder="enter your password"
