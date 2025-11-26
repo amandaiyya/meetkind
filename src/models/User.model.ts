@@ -24,6 +24,8 @@ export interface User extends Document {
     isVerified: boolean;
     verifyCode?: string | undefined;
     verifyCodeExpiry?: Date | undefined;
+    token?: string | undefined;
+    tokenExpiry?: Date | undefined;
 }
 
 const UserSchema: Schema<User> = new Schema({
@@ -70,7 +72,13 @@ const UserSchema: Schema<User> = new Schema({
         type: String,
     },
     verifyCodeExpiry: {
-        type: Date
+        type: Date,
+    },
+    token: {
+        type: String,
+    },
+    tokenExpiry: {
+        type: Date,
     }
 },{timestamps: true})
 

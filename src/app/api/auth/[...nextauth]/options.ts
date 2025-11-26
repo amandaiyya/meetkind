@@ -136,8 +136,6 @@ export const { handlers } = NextAuth({
                 existingUser.oauthProviderId = profile?.sub as string;
                 existingUser.avatar = profile?.picture;
                 existingUser.isVerified = true;
-                existingUser.verifyCode = undefined;
-                existingUser.verifyCodeExpiry = undefined;
 
                 await existingUser.save();
             }
