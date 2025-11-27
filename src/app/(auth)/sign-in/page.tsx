@@ -71,6 +71,7 @@ function SigninPage() {
                   {...register("email")}
                   className="flex-1 outline-none font-semibold" 
                   placeholder="enter your email"
+                  required
                 />
               </div>
               <p className="text-red-500 text-sm w-full h-2">{errors.email && errors.email.message}</p>
@@ -91,6 +92,7 @@ function SigninPage() {
                   {...register("password")}
                   className="flex-1 outline-none font-semibold" 
                   placeholder="enter your password"
+                  required
                 />
               </div>
               <p className="text-red-500 text-sm w-full h-2">{errors.password && errors.password.message}</p>
@@ -99,6 +101,7 @@ function SigninPage() {
             <Button
               type="submit"
               className="primary-dark w-full text-center flex justify-center items-center"
+              disabled={isSubmitting}
             >
               {isSubmitting ? (
                 <>

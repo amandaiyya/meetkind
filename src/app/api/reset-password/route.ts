@@ -38,11 +38,11 @@ export async function PATCH(req: NextRequest){
         const isPasswordsSame = await bcrypt.compare(password, user.password!);
 
         if(!isTokenValid) {
-            throw new ApiError(400, "Reset Code doesn't matched");
+            throw new ApiError(400, "Reset token doesn't matched");
         }
 
         if(!isTokenNotExpired) {
-            throw new ApiError(400, "Reset Code has been expired");
+            throw new ApiError(400, "Reset token has been expired");
         }
 
         if(!isPasswordsSame) {
