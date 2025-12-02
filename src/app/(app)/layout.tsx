@@ -1,4 +1,5 @@
 import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 
 export default function RootLayout({
   children,
@@ -9,6 +10,7 @@ export default function RootLayout({
     <>
       <div className="bg-light-secondary noise">
           <main className="noise bg-light-primary h-screen shadow-xl">
+              <Navbar />
               {children}
           </main>
           <Footer />

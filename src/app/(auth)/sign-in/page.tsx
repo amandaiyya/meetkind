@@ -100,7 +100,7 @@ function SigninPage() {
             <Link href="/forgot-password" className="underline text-dark-primary float-right font-semibold block py-2">Forgot Password?</Link>
             <Button
               type="submit"
-              className="primary-dark w-full text-center flex justify-center items-center"
+              className="primary-dark w-full text-center flex justify-center items-center px-3 py-2"
               disabled={isSubmitting}
             >
               {isSubmitting ? (

@@ -13,7 +13,7 @@ function Button({
 }: ButtonProps) {
   return (
     <button 
-      className={`shadow-md cursor-pointer border-2 rounded px-3 py-2 font-semibold ${className}
+      className={`shadow-md cursor-pointer border-2 rounded font-semibold outline-none ${className}
         ${className?.includes("primary-dark") && "border-dark-secondary bg-dark-primary text-light-primary"}
         ${className?.includes("primary-light") && "border-dark-primary bg-light-primary text-dark-secondary"}
         ${className?.includes("secondary-dark") && "border-dark-secondary bg-light-primary text-dark-secondary"}

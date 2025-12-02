@@ -70,7 +70,7 @@ function page() {
                 <p className="text-red-500 text-sm text-center w-full h-4 mb-3">{errors.email && errors.email.message}</p>
                 <Button
                     type="submit"
-                    className="primary-dark w-full text-center flex justify-center items-center"
+                    className="primary-dark w-full text-center flex justify-center items-center px-3 py-2"
                     disabled={isSubmitting}
                 >
                     {isSubmitting ? (

@@ -126,7 +126,7 @@ function SignupPage() {
             </div>
             <Button
               type="submit"
-              className="primary-dark w-full text-center flex justify-center items-center mt-5"
+              className="primary-dark w-full text-center flex justify-center items-center mt-5 px-3 py-2"
               disabled={isSubmitting}
             >
               {isSubmitting ? (
