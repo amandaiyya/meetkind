@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document, mongo } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
 import { AccessibilityNeedsSchema } from "@/schemas/AccessibilityNeedsSchema";
 import * as z from 'zod';
 import { Address } from "./User.model";

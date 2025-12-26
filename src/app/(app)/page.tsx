@@ -39,7 +39,7 @@ export default function Home() {
       <h2 className="text-lg sm:text-2xl xl:text-3xl mt-5 mb-6">let’s find a accessible midway!</h2>
       <Button 
         className="primary-dark px-3 py-1 lg:text-lg"
-        onClick={() => router.replace("/find")}
+        onClick={() => router.replace("/plan")}
       >Search</Button>
       <img src={src} alt="" className="absolute bottom-0 left-0"/>
     </section>
