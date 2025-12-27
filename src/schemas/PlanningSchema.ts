@@ -2,12 +2,24 @@ import {z} from 'zod';
 
 export const LocationSchema = z.object({
     address: z
-        .string({message: "Address is required"}),
+        .string()
+        .min(1, "Please select an address from suggestions"),
     
     coordinates: z
         .object({
-            lat: z.number().min(-90).max(90),
-            lon: z.number().min(-180).max(180),
+            lat: z
+                .number({
+                    error: "Please select an address from suggestions",
+                })
+                .min(-90)
+                .max(90),
+
+            lon: z
+                .number({
+                    error: "Please select an address from suggestions"
+                })
+                .min(-180)
+                .max(180),
         }),
 })
 

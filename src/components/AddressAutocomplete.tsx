@@ -1,12 +1,14 @@
 import axios from "axios";
 import { useState } from "react";
-import { UseFormRegister, UseFormSetValue } from "react-hook-form";
+import { FieldErrors, UseFormRegister, UseFormSetValue, get } from "react-hook-form";
 import { useDebouncedCallback } from "use-debounce";
 
 interface AddressAutocompleteProps {
+    name: string;
     register: UseFormRegister<any>;
     setValue: UseFormSetValue<any>;
-    name: string;
+    errors: FieldErrors<any>;
+    className?: string;
     placeholder: string;
 }
 
@@ -26,9 +28,11 @@ interface PhotonFeatures {
 }
 
 export default function AddressAutocomplete({
+    name,
     register,
     setValue,
-    name,
+    errors,
+    className = "",
     placeholder = "Enter address",
 }: AddressAutocompleteProps){
 
@@ -36,6 +40,8 @@ export default function AddressAutocomplete({
     const [open, setOpen] = useState(false);
     const [results, setResults] = useState<PhotonFeatures[]>([]);
     const [selected, setSelected] = useState(false);
+
+    const errorMessage = get(errors, `${name}.address`)?.message ?? "";
 
     const searchAddress = async (text: string) => {
         if(!text || text.length < 3) {
@@ -59,8 +65,12 @@ export default function AddressAutocomplete({
             
             setResults(uniqueResults);
         } catch (error) {
-            console.log(error);
-            return;
+            if(axios.isAxiosError(error)) {
+                const msg = error.response?.data?.message || "Network Error";
+                console.log(msg);
+            } else {
+                console.log(error);
+            }
         }
     }
 
@@ -70,6 +80,16 @@ export default function AddressAutocomplete({
         },
         300
     )
+
+    const onEmpty = (text: string) => {
+        if(!text) {
+            setSelected(false);
+            setValue(name, {
+                address: "",
+                coordinates: {}
+            })
+        }
+    }
 
     const handleSelect = (item: PhotonFeatures, label: string) => {
         setSelected(true);
@@ -91,7 +111,7 @@ export default function AddressAutocomplete({
     }
 
     return (
-        <div className="relative">
+        <div className={`relative ${className}`}>
             <div className={`${selected && "bg-light-primary"} border-2 border-dark-secondary p-2 rounded-md flex items-center gap-1 text-xs font-semibold shadow-sm`}>
                 <img src="location.svg" width="18px" height="18px" />
                 <input  
@@ -101,20 +121,25 @@ export default function AddressAutocomplete({
                     placeholder={placeholder}
                     onFocus={() => setOpen(true)}
                     onChange={(e) => {
+                        onEmpty(e.target.value)
                         setAddress(e.target.value)
                         debouncedSearch(e.target.value)
                     }}
-                    className="outline-none w-[125px]"
+                    className="outline-none w-full"
                 />
                 <input type="hidden" {...register(name)}/>
             </div>
 
-            {address === "" && results.length <= 0 && (
-                <span className="absolute text-[9px] align-text-top px-2">Start typing to search places ...</span>
+            {errorMessage && results.length <= 0 && (
+                <p className="text-red-500 text-sm w-full h-2">{errorMessage}</p>
+            )}
+
+            {address === "" && results.length <= 0 && !errorMessage && (
+                <p className="absolute text-[9px] align-text-top px-2">Start typing to search places ...</p>
             )}
 
             {open && results.length > 0 && (
-                <ul className="w-full absolute z-[9] border border-dark-secondary bg-dark-secondary space-y-[1px]">
+                <ul className="w-full absolute z-[9] border border-dark-secondary bg-dark-secondary space-y-[1px] shadow-lg">
                     {results.map((item) => {
                         const p = item.properties;
 
@@ -131,7 +156,7 @@ export default function AddressAutocomplete({
                               aria-required
                               key={`${p.osm_type}-${p.osm_id}`}
                               onClick={() => handleSelect(item, label)}
-                              className="p-1 bg-light-secondary text-[10px] cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis"
+                              className="p-1 bg-light-primary text-[10px] cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis"
                             >
                                 {label}
                             </li>

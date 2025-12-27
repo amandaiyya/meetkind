@@ -76,6 +76,7 @@ export default function Plan() {
                       {...register("vanue")}
                       type='hidden'
                     />
+
                     {showOptions && (
                       <div className='bg-black/50 fixed inset-0 z-10 w-screen h-screen p-4 flex justify-center items-center'>
                         <div className="p-4 space-y-3 bg-light-primary border border-dark-primary shadow-md rounded-xl text-center">
@@ -106,17 +107,20 @@ export default function Plan() {
                       </div>
                     )}
                 </li>
-                <li className="flex flex-wrap items-center gap-4 mb-6">
+
+                <li className="flex flex-col gap-2 mb-6">
                   <h3 className="font-semibold text-sm">Your location</h3>
                   <AddressAutocomplete 
                     register={register}
                     setValue={setValue}
                     name='myAddress'
                     placeholder='where i live'
+                    errors={errors}
                   />
                 </li>
+
                 {fields.map((field, i) => (
-                  <li key={field.id} className="flex flex-wrap items-center gap-4 mb-6">
+                  <li key={field.id} className="flex flex-col gap-2 mb-6">
                     <h3 className="font-semibold text-sm">{`Friend ${i + 1}'s location`}</h3>
                     <div className="flex items-center">
                       <AddressAutocomplete 
@@ -124,6 +128,8 @@ export default function Plan() {
                         setValue={setValue}
                         name={`friendsAddresses.${i}`}
                         placeholder='where they live'
+                        errors={errors}
+                        className="w-full"
                       />
                       {fields.length > 1 && (
                         <button
@@ -138,13 +144,25 @@ export default function Plan() {
                   </li>
                 ))}
               </ul>
+              
               <Button 
-                type="submit"
-                className="text-xs px-3 py-2 border-dashed"
+                type="button"
+                className="text-xs px-3 py-2 mt-2 border-dashed border-dark-primary text-dark-primary"
                 onClick={() => append({address: "", coordinates: {lat: 0, lon: 0}})}
               >+ Add another friend</Button>
           </div>
-          <Button className='primary-dark px-4 py-1'>Find</Button>
+          <Button
+            type="submit"
+            className='primary-dark px-4 py-1 text-center flex items-center'
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+                <>
+                  <img src="/Loader.svg" className="w-4 sm:w-5 mr-2 animate-spin"/>
+                  <span>Finding</span>
+                </>
+              ) : "Find"}
+          </Button>
         </form>
     </section>
   )
