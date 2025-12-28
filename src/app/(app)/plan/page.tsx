@@ -2,7 +2,7 @@
 
 import AddressAutocomplete from '@/components/AddressAutocomplete';
 import Button from '@/components/Button';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { PlanningSchema } from '@/schemas/PlanningSchema';
@@ -17,6 +17,8 @@ const vanueCategory = {
 export default function Plan() {
   const [mounted, setMounted] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
+
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
 
   const {
     control,
@@ -50,7 +52,19 @@ export default function Plan() {
   }
 
   useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if(
+        wrapperRef.current &&
+        !wrapperRef.current.contains(e.target as Node)
+      ) {
+        setShowOptions(false);
+      }
+    }
+
     setMounted(true);
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   },[])
    
   if(!mounted) return null;
@@ -62,7 +76,7 @@ export default function Plan() {
           className="flex flex-col gap-5 items-center justify-center w-full h-full"
         >
           <div className='noise w-full max-w-md min-h-2/3 p-4 bg-light-secondary border border-dark-primary shadow-md rounded-xl'>
-              <ul className=''>
+              <ul>
                 <li className="flex flex-wrap items-center gap-4 relative mb-3">
                     <h3 className="font-semibold text-sm">Vanue to Search</h3>
                     <Button
@@ -79,7 +93,7 @@ export default function Plan() {
 
                     {showOptions && (
                       <div className='bg-black/50 fixed inset-0 z-10 w-screen h-screen p-4 flex justify-center items-center'>
-                        <div className="p-4 space-y-3 bg-light-primary border border-dark-primary shadow-md rounded-xl text-center">
+                        <div ref={wrapperRef} className="p-4 space-y-3 bg-light-primary border border-dark-primary shadow-md rounded-xl text-center">
                             <h2 className="text-lg font-semibold">Where to meet?</h2>
                             <div className='flex flex-col items-center gap-2 text-sm font-medium'>
                               <div 

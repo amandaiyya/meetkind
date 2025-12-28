@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FieldErrors, UseFormRegister, UseFormSetValue, get } from "react-hook-form";
 import { useDebouncedCallback } from "use-debounce";
 
@@ -35,6 +35,7 @@ export default function AddressAutocomplete({
     className = "",
     placeholder = "Enter address",
 }: AddressAutocompleteProps){
+    const wrapperRef = useRef<HTMLDivElement | null>(null);
 
     const [address, setAddress] = useState("");
     const [open, setOpen] = useState(false);
@@ -110,8 +111,23 @@ export default function AddressAutocomplete({
         setResults([]);
     }
 
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            if(
+                wrapperRef.current &&
+                !wrapperRef.current.contains(e.target as Node)
+            ) {
+                setOpen(false);
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    },[])
+
     return (
-        <div className={`relative ${className}`}>
+        <div ref={wrapperRef} className={`relative ${className}`}>
             <div className={`${selected && "bg-light-primary"} border-2 border-dark-secondary p-2 rounded-md flex items-center gap-1 text-xs font-semibold shadow-sm`}>
                 <img src="location.svg" width="18px" height="18px" />
                 <input  
