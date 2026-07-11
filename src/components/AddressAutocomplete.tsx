@@ -12,10 +12,11 @@ interface AddressAutocompleteProps {
     placeholder: string;
 }
 
-interface PhotonFeatures {
+export interface PhotonFeatures {
     properties: {
         osm_id: number;
         osm_type: string;
+        osm_value: string;
         name?: string;
         street?: string;
         city?: string;

@@ -5,7 +5,7 @@ export type Coordinate = {
     lon: number;
 }
 
-export function midpointCalculator(
+export default function midpointCalculator(
     points: Coordinate[]
 ): Coordinate {
     if(points.length < 2) {

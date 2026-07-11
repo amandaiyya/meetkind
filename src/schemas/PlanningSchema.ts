@@ -24,9 +24,9 @@ export const LocationSchema = z.object({
 })
 
 export const PlanningSchema = z.object({
-    vanue: z
+    venue: z
         .string()
-        .min(1, "Vanue is required"),
+        .min(1, "venue is required"),
 
     myAddress: LocationSchema,
 

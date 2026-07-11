@@ -22,7 +22,7 @@ export interface Venue extends Document{
 const VenueSchema: Schema<Venue> = new Schema({
     name: {
         type: String,
-        required: [true, "Vanue name is required"],
+        required: [true, "Venue name is required"],
         trim: true
     },
     placeId: {
