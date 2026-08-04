@@ -10,6 +10,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import axios from "axios";
 import * as z from "zod";
+import { EyeCloseIcon, EyeIcon, GoogleIcon, LoaderIcon, MailIcon, UserIcon } from '@/assets/assets';
 
 function SignupPage() {
   const router = useRouter();
@@ -73,7 +74,7 @@ function SignupPage() {
               <label className="font-semibold mb-3">Username</label>
               <div className="border-2 rounded-sm py-1 px-2 mt-1 flex flex-wrap items-center gap-2">
                 <div className="w-5">
-                  <img src="/User.svg" alt="meetkind" />
+                  <UserIcon className=''/>
                 </div>
                 <div className="w-[1.5px] h-5 bg-dark-secondary"></div>
                 <input 
@@ -90,7 +91,7 @@ function SignupPage() {
               <label className="font-semibold mb-3">Email</label>
               <div className="border-2 rounded-sm py-1 px-2 mt-1 flex flex-wrap items-center gap-2">
                 <div className="w-5">
-                  <img src="/Mail.svg" alt="meetkind" />
+                  <MailIcon className=''/>
                 </div>
                 <div className="w-[1.5px] h-5 bg-dark-secondary"></div>
                 <input 
@@ -111,7 +112,11 @@ function SignupPage() {
                   onClick={() => setPasswordVisibility(!passwordVisibility)}
                   className="w-5 cursor-pointer"
                 >
-                  <img src={passwordVisibility ? "/Eye-close.svg" : "/Eye.svg"} alt="meetkind" />
+                  {passwordVisibility ? (
+                    <EyeCloseIcon className='w-6 h-6'/>
+                  ) : (
+                    <EyeIcon className='w-6 h-6'/>
+                  )}
                 </div>
                 <div className="w-[1.5px] h-5 bg-dark-secondary"></div>
                 <input 
@@ -131,7 +136,7 @@ function SignupPage() {
             >
               {isSubmitting ? (
                 <>
-                  <img src="/Loader.svg" className="w-4 sm:w-5 mr-2 animate-spin"/>
+                  <LoaderIcon className="w-4 sm:w-5 mr-2 animate-spin"/>
                   <span>Loading</span>
                 </>
               ) : "Sign up"}
@@ -147,7 +152,7 @@ function SignupPage() {
             onClick={handleOauth}
             className="w-13 h-13 my-2 border-2 border-black/50 bg-white rounded-full self-center shadow-md flex justify-center items-center cursor-pointer"
           >
-            <img className="w-7 h-7" src="/Google.svg" alt="meetkind" />
+            <GoogleIcon className='w-7 h-7'/>
           </div>
           <p className="text-center md:text-lg font-medium">
             Dont have an account?{" "}

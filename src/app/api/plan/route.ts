@@ -7,6 +7,8 @@ import ApiError from "@/lib/apiError";
 import ApiResponse from "@/lib/apiResponse";
 import { PlanningSchema } from "@/schemas/PlanningSchema";
 import { NextRequest, NextResponse } from "next/server";
+import { auth } from "../auth/[...nextauth]/options-lite";
+import Plan from "@/models/Plans.model";
 
 export async function POST(req: NextRequest) {
     try {
@@ -40,8 +42,20 @@ export async function POST(req: NextRequest) {
         
         const rankedVenues = getRankedVenues(routedVenues);
 
+        const session = await auth();
+
+        if(session?.user) {
+            await Plan.create({
+                userId: session.user._id,
+                participantsLocations: [myAddress, ...friendsAddresses],
+                midpoint,
+                searchRadius,
+                venues: rankedVenues
+            });
+        }
+
         return NextResponse.json(
-            new ApiResponse(200, rankedVenues, "success"),
+            new ApiResponse(200, rankedVenues, "Plan created successfully"),
             { status: 200 }
         )
     } catch (error) {

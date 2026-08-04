@@ -1,5 +1,6 @@
 "use client";
 
+import { LoaderIcon, MailIcon } from '@/assets/assets';
 import Button from '@/components/Button';
 import { ForgotPasswordSchema } from '@/schemas/ForgotPasswordSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -56,7 +57,7 @@ function page() {
                 <label className="font-semibold mb-5 text-center">No worries, meetkind will send you reset link.</label>
                 <div className="w-full border-2 rounded-sm py-1 px-2 mt-1 flex flex-wrap items-center gap-2">
                     <div className="w-5">
-                    <img src="/Mail.svg" alt="meetkind" />
+                        <MailIcon className=''/>
                     </div>
                     <div className="w-[1.5px] h-5 bg-dark-secondary"></div>
                     <input 
@@ -75,7 +76,7 @@ function page() {
                 >
                     {isSubmitting ? (
                         <>
-                        <img src="/Loader.svg" className="w-4 sm:w-5 mr-2 animate-spin"/>
+                        <LoaderIcon className="w-4 sm:w-5 mr-2 animate-spin"/>
                         <span>Loading</span>
                         </>
                     ) : "Submit"}

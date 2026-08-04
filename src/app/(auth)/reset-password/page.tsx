@@ -1,5 +1,6 @@
 "use client";
 
+import { EyeCloseIcon, EyeIcon, LoaderIcon } from '@/assets/assets';
 import Button from '@/components/Button';
 import { ResetPasswordSchema } from '@/schemas/ResetPasswordSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -95,7 +96,11 @@ function page() {
                       onClick={() => setNewPasswordVisibility(!newPasswordVisibility)}
                       className="w-5 cursor-pointer"
                     >
-                      <img src={newPasswordVisibility ? "/Eye-close.svg" : "/Eye.svg"} alt="meetkind" />
+                      {newPasswordVisibility ? (
+                        <EyeCloseIcon className='w-6 h-6'/>
+                      ) : (
+                        <EyeIcon className='w-6 h-6'/>
+                      )}
                     </div>
                     <div className="w-[1.5px] h-5 bg-dark-secondary"></div>
                     <input 
@@ -117,7 +122,11 @@ function page() {
                       onClick={() => setConfirmPasswordVisibility(!confirmPasswordVisibility)}
                       className="w-5 cursor-pointer"
                     >
-                      <img src={confirmPasswordVisibility ? "/Eye-close.svg" : "/Eye.svg"} alt="meetkind" />
+                      {confirmPasswordVisibility ? (
+                        <EyeCloseIcon className='w-6 h-6'/>
+                      ) : (
+                        <EyeIcon className='w-6 h-6'/>
+                      )}
                     </div>
                     <div className="w-[1.5px] h-5 bg-dark-secondary"></div>
                     <input 
@@ -138,7 +147,7 @@ function page() {
                 >
                     {isSubmitting ? (
                         <>
-                        <img src="/Loader.svg" className="w-4 sm:w-5 mr-2 animate-spin"/>
+                        <LoaderIcon className="w-4 sm:w-5 mr-2 animate-spin"/>
                         <span>Loading</span>
                         </>
                     ) : "Reset"}

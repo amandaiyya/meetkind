@@ -1,3 +1,4 @@
+import { LocationIcon } from "@/assets/assets";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { FieldErrors, UseFormRegister, UseFormSetValue, get } from "react-hook-form";
@@ -130,7 +131,7 @@ export default function AddressAutocomplete({
     return (
         <div ref={wrapperRef} className={`relative ${className}`}>
             <div className={`${selected && "bg-light-primary"} border-2 border-dark-secondary p-2 rounded-md flex items-center gap-1 text-xs font-semibold shadow-sm`}>
-                <img src="location.svg" width="18px" height="18px" />
+                <LocationIcon className="w-[18px] h-[18px]"/>
                 <input  
                     required
                     type="text" 

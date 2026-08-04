@@ -1,5 +1,6 @@
 "use client";
 
+import { GithubIcon, HeartIcon, InstagramIcon, LinkedinIcon } from '@/assets/assets';
 import Link from 'next/link';
 import React from 'react';
 
@@ -18,13 +19,13 @@ function Footer() {
                     />
                     <div className="flex items-end pb-1.5 gap-2.5">
                         <Link href="https://github.com/amandaiyya">
-                            <img width="20px" src="Github.svg"/>
+                            <GithubIcon className='w-5 h-5'/>
                         </Link>
                         <Link href="https://www.linkedin.com/in/amandaiyya/">
-                            <img width="20px" src="Linkedin.svg"/>
+                            <LinkedinIcon className='w-5 h-5'/>
                         </Link>
                         <Link href="/">
-                            <img width="20px" src="Instagram.svg"/>
+                            <InstagramIcon className='w-5 h-5'/>
                         </Link>
                     </div>
                 </div>
@@ -73,7 +74,7 @@ function Footer() {
       <div className="w-full h-[1px] bg-dark-secondary"></div>
       <div className="text-xs xl:text-sm flex flex-col sm:flex-row gap-1 sm:gap-0 justify-between items-center mt-2.5 sm:mt-4 sm:ml-10 lg:ml-0">
         <p className="flex-2 lg:flex-none">© 2025 meetkind.  All rights reserved</p>
-        <p className="flex flex-1 lg:flex-none items-center gap-1 sm:ml-4">made with <img src="heart.svg" /> for kind meetups.</p>
+        <p className="flex flex-1 lg:flex-none items-center gap-1 sm:ml-4">made with <HeartIcon /> for kind meetups.</p>
       </div>
     </footer>
   )

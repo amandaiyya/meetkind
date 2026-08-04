@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Button from './Button';
 import Link from 'next/link';
+import { MoonIcon } from '@/assets/assets';
 
 function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -22,8 +23,8 @@ function Navbar() {
         ) : (
             <Button className="secondary-dark noise lg:text-lg px-3 py-1">sign in</Button>
         )}
-        <button className="outline-none">
-            <img src="dark_mode.svg" className="cursor-pointer w-7 lg:w-8"/>
+        <button className="outline-none cursor-pointer">
+            <MoonIcon className="w-7 lg:w-8"/>
         </button>
       </div>
     </nav>

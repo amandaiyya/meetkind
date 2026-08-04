@@ -1,5 +1,6 @@
 "use client";
 
+import { LoaderIcon } from '@/assets/assets';
 import Button from '@/components/Button';
 import { VerifySchema } from '@/schemas/verirySchema';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -113,7 +114,7 @@ function page() {
                 >
                     {isSubmitting ? (
                         <>
-                        <img src="/Loader.svg" className="w-4 sm:w-5 mr-2 animate-spin"/>
+                        <LoaderIcon className="w-4 sm:w-5 mr-2 animate-spin"/>
                         <span>Verifying</span>
                         </>
                     ) : "Verify"}

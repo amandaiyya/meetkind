@@ -2,18 +2,7 @@ import axios from "axios";
 import { Coordinate } from "./midpointCalculator";
 import ApiError from "@/lib/apiError";
 import envConfig from "@/lib/envConfig";
-
-export interface venueFields {
-    id: string;
-    name: string;
-    address: any;
-    coordinates: {
-        lat: number;
-        lon: number;
-    },
-    dist: number;
-    category: string;
-}
+import { venueFields } from "@/types/venue";
 
 export default async function findNearbyVenues(
     midpoint: Coordinate,
@@ -44,9 +33,9 @@ export default async function findNearbyVenues(
 
     const venues: venueFields[] = data?.results.map((venue: any) => {
         return {
-            id: venue.id,
+            placeId: venue.id,
             name: venue.poi.name,
-            address: venue.address,
+            address: venue.address.freeformAddress,
             coordinates: venue.position,
             dist: venue.dist,
             category: 
@@ -59,7 +48,7 @@ export default async function findNearbyVenues(
 
     return venues
         .filter((v) => {
-            const key = v.id;
+            const key = v.placeId;
 
             if (seen.has(key)) return false;
             seen.add(key);

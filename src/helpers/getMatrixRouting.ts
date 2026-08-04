@@ -1,24 +1,6 @@
+import { venueFields, VenueWithRoutes } from "@/types/venue";
 import { Coordinate } from "./midpointCalculator";
-import { venueFields } from "./findNearbyVenues";
 import axios from "axios";
-
-type VenueRoute = {
-    userIndex: number;
-    travelDistance: number; // meters
-    travelTime: number; // seconds
-};
-
-export type VenueWithRoutes = venueFields & {
-    routes: VenueRoute[];
-
-    totalTravelDistance: number;
-    totalTravelTime: number;
-
-    averageTravelDistance: number;
-    averageTravelTime: number;
-
-    travelTimeStdDev: number;
-};
 
 type TravelMode = "car" | "pedestrian" ;
 

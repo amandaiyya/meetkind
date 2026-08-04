@@ -1,10 +1,4 @@
-import { VenueWithRoutes } from "./getMatrixRouting";
-
-type RankedVenue = VenueWithRoutes & {
-    normalizedTotalTravelTime: number;
-    normalizedTravelTimeStdDev: number;
-    score: number;
-};
+import { RankedVenue, VenueWithRoutes } from "@/types/venue";
 
 const TIME_WEIGHT = 0.7;
 const FAIRNESS_WEIGHT = 0.3;
@@ -57,5 +51,6 @@ export default function getRankedVenues(
                 score,
             };
         })
-        .sort((a, b) => a.score - b.score);
+        .sort((a, b) => a.score - b.score)
+        .slice(0, 5);
 };

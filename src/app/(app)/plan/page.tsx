@@ -8,13 +8,21 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { PlanningSchema } from '@/schemas/PlanningSchema';
 import * as z from "zod";
 import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { usePlanStore } from '@/stores/plan-store';
+import { LoaderIcon } from '@/assets/assets';
 
-const vanueCategory = {
-  cafe: "cafes",
-  restaurants: "restaurants"
+const venueCategory = {
+  cafe: "cafe",
+  restaurants: "restaurant"
 }
 
 export default function Plan() {
+  const router = useRouter();
+
+  const { setVenues } = usePlanStore();
+
   const [mounted, setMounted] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
 
@@ -30,7 +38,7 @@ export default function Plan() {
   } = useForm<z.infer<typeof PlanningSchema>>({
     resolver: zodResolver(PlanningSchema),
     defaultValues: {
-      vanue: vanueCategory.cafe,
+      venue: venueCategory.cafe,
       myAddress: {
         address: "",
         coordinates: {}
@@ -48,7 +56,22 @@ export default function Plan() {
   })
 
   const onSubmit = async (body: z.infer<typeof PlanningSchema>) => {
-    console.log("body",body);
+    try {
+      const {data} = await axios.post("/api/plan", body);
+      if(data.success) {
+        console.log(data.message);
+        setVenues(data.data);
+        router.push("/results");
+      }
+    } catch (error) {
+      if(axios.isAxiosError(error)) {
+        const msg = error.response?.data?.message || "Server Error";
+        console.log(msg);
+      } else {
+        console.log(error);
+        console.log("Planning Failed!");
+      }
+    }
   }
 
   useEffect(() => {
@@ -78,16 +101,16 @@ export default function Plan() {
           <div className='noise w-full max-w-md min-h-2/3 p-4 bg-light-secondary border border-dark-primary shadow-md rounded-xl'>
               <ul>
                 <li className="flex flex-wrap items-center gap-4 relative mb-3">
-                    <h3 className="font-semibold text-sm">Vanue to Search</h3>
+                    <h3 className="font-semibold text-sm">venue to Search</h3>
                     <Button
                       type='button'
                       onClick={() => setShowOptions(true)}
                       className='primary-dark py-2 px-3 text-sm'
                     >
-                      {getValues('vanue')}
+                      {getValues('venue')}
                     </Button>
                     <input 
-                      {...register("vanue")}
+                      {...register("venue")}
                       type='hidden'
                     />
 
@@ -100,21 +123,21 @@ export default function Plan() {
                                 role="button"
                                 onClick={() => {
                                   setShowOptions(false);
-                                  setValue("vanue", vanueCategory.cafe);
+                                  setValue("venue", venueCategory.cafe);
                                 }}
                                 className="px-1 py-2 rounded-md bg-light-secondary w-full border border-dark-secondary cursor-pointer shadow-md"
                               >
-                                  {vanueCategory.cafe}
+                                  {venueCategory.cafe}
                               </div>
                               <div 
                                 role="button"
                                 onClick={() => {
                                   setShowOptions(false);
-                                  setValue("vanue", vanueCategory.restaurants);
+                                  setValue("venue", venueCategory.restaurants);
                                 }}
                                 className="px-1 py-2 rounded-md bg-light-secondary w-full border border-dark-secondary cursor-pointer shadow-md"
                               >
-                                  {vanueCategory.restaurants}
+                                  {venueCategory.restaurants}
                               </div>
                             </div>
                         </div>
@@ -172,7 +195,7 @@ export default function Plan() {
           >
             {isSubmitting ? (
                 <>
-                  <img src="/Loader.svg" className="w-4 sm:w-5 mr-2 animate-spin"/>
+                  <LoaderIcon className="w-4 sm:w-5 mr-2 animate-spin"/>
                   <span>Finding</span>
                 </>
               ) : "Find"}

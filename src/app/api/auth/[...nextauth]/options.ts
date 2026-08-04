@@ -1,6 +1,6 @@
 import ApiError from "@/lib/apiError";
 import dbConnect from "@/lib/dbConnect";
-import User, { User as UserInterface } from "@/models/User.model";
+import User from "@/models/User.model";
 import NextAuth from "next-auth";
 import credentials from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
@@ -46,7 +46,7 @@ export const { handlers } = NextAuth({
                 }
 
                 return {
-                    _id: user._id as string,
+                    _id: String(user._id),
                     username: user.username,
                     email: user.email,
                     isVerified: user.isVerified,
@@ -69,7 +69,7 @@ export const { handlers } = NextAuth({
   callbacks: {
     async jwt({token, user}) {
         if(user) {
-            token._id = user._id as string,
+            token._id = user._id.toString(),
             token.username = user.username as string,
             token.email = user.email as string,
             token.isVerified = user.isVerified as boolean,
@@ -85,7 +85,7 @@ export const { handlers } = NextAuth({
 
     async session({session, token}) {
         if(token) {
-            session.user._id = token._id as string,
+            session.user._id = token._id.toString(),
             session.user.username = token.username as string,
             session.user.email = token.email as string,
             session.user.isVerified = token.isVerified as boolean,
@@ -140,7 +140,7 @@ export const { handlers } = NextAuth({
                 await existingUser.save();
             }
             
-            user._id = existingUser._id as string;
+            user._id = String(existingUser._id);
             user.username = existingUser.username as string;
             user.email = existingUser.email as string;
             user.avatar = existingUser.avatar ?? null;

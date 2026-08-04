@@ -1,65 +1,166 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { AccessibilityNeedsSchema } from "@/schemas/AccessibilityNeedsSchema";
-import * as z from 'zod';
-import { Address } from "./User.model";
+import { Coordinate } from "@/helpers/midpointCalculator";
+import "./User.model";
 
-type AccessibilityNeedsSchema = z.infer<typeof AccessibilityNeedsSchema>
+// import { AccessibilityNeedsSchema } from "@/schemas/AccessibilityNeedsSchema";
+// import * as z from 'zod';
 
-export interface Plan extends Document{
-    title: String;
-    planCreator: mongoose.Types.ObjectId;
-    midpoint: {
-        lat: number;
-        lng: number;
-    };
-    participantLocations: {
-        address?: Address;
-        lat: number;
-        lng: number;
+// type AccessibilityNeedsSchema = z.infer<typeof AccessibilityNeedsSchema>
+
+export interface Venue extends Document {
+    placeId: string;
+    name: string;
+    address: string;
+    coordinates: Coordinate;
+    category: string;
+    routes: {
+        userIndex: number;
+        travelDistance: number; // meters
+        travelTime: number; // seconds
     }[];
-    accessibilityNeeds?: AccessibilityNeedsSchema;
-    venues: mongoose.Types.ObjectId[];
+    totalTravelDistance: number;
+    totalTravelTime: number;
+    averageTravelDistance: number;
+    averageTravelTime: number;
+    travelTimeStdDev: number;
+    normalizedTotalTravelTime: number;
+    normalizedTravelTimeStdDev: number;
+    score: number;
+
+    // accessibilities?: AccessibilityNeedsSchema;
+    // ratings?: number;
+    // reviews?: string[];
+    // photos?: string[];
 }
 
-const PlanSchema: Schema<Plan> = new Schema({
-    title: {
+export interface Plan extends Document{
+    userId: mongoose.Types.ObjectId;
+    participantsLocations: {
+        address: string;
+        coordinates: Coordinate;
+    }[];
+    midpoint: Coordinate;
+    searchRadius: number;
+    venues: Venue[];
+
+    // accessibilityNeeds?: AccessibilityNeedsSchema;
+}
+
+const VenueSchema = new Schema<Venue>({
+    name: {
         type: String,
-        required: [true, "Title of plan is required"],
-        trim: true,
+        required: [true, "Venue name is required"],
+        trim: true
     },
-    planCreator: {
-        required: [true, "Plan Creator id is required"],
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+    placeId: {
+        type: String,
+        unique: true,
+        required: [true, "Place id is required"],
     },
-    midpoint: {
-        lat: { type: Number },
-        lng: { type: Number },
+    address: {
+        type: String,
+        required: [true, "Venue address is required"],
     },
-    participantLocations: {
-        address: {
-            formatted: { type: String },
-            houseNumber: { type: String },
-            area: { type: String },
-            city: { type: String },
-            state: { type: String },
-            country: { type: String }, 
+    coordinates: {
+        lat: { type: Number, required: [true, "Venue coordinates lat is required"], },
+        lon: { type: Number, required: [true, "Venue coordinates lon is required"], }
+    },
+    category: {
+        type: String,
+        required: [true, "Venue category is required"],
+    },
+    routes: [{
+        userIndex: {
+            type: Number,
+            required: true,
         },
-        lat: { type: Number },
-        lng: { type: Number }
-    },
-    accessibilityNeeds: {
-        wheelchair: { tyep: Boolean },
-        restroom: { tyep: Boolean },
-        elevator: { tyep: Boolean },
-        quietPlace: { tyep: Boolean }
-    },
-    venues: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Venue',
+        travelDistance: {
+            type: Number,
+            required: true,
+        },
+        travelTime: {
+            type: Number,
+            required: true,
         }
-    ]
+    }],
+    totalTravelDistance: {
+        type: Number,
+        required: [true, "Total travel distance is required"],
+    },
+    totalTravelTime: {
+        type: Number,
+        required: [true, "Total travel time is required"],
+    },
+    averageTravelDistance: {
+        type: Number,
+        required: [true, "Average travel distance is required"],
+    },
+    averageTravelTime: {
+        type: Number,
+        required: [true, "Average travel time is required"],
+    },
+    travelTimeStdDev: {
+        type: Number,
+        required: [true, "Trave time std dev is required"],
+    },
+    normalizedTotalTravelTime: {
+        type: Number,
+        required: true,
+    },
+    normalizedTravelTimeStdDev: {
+        type: Number,
+        required: true,
+    },
+    score: {
+        type: Number,
+        required: [true, "Venue score is required"],
+    },
+
+    // accessibilities: {
+    //     wheelchair: { tyep: Boolean },
+    //     restroom: { tyep: Boolean },
+    //     elevator: { tyep: Boolean },
+    //     quietPlace: { tyep: Boolean }
+    // },
+    // ratings: {
+    //     type: Number,
+    // },
+    // reviews: [String],
+    // photos: [String],
+}, { timestamps: true })
+
+const PlanSchema = new Schema<Plan>({
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        required: [true, "User ID is required"],
+    },
+    participantsLocations: [{
+        address: {
+            type: String,
+            required: [true, "Participants address is required"],
+        },
+        coordinates: {
+            lat: { type: Number, required: [true, "Participants coordinates lat is required"], },
+            lon: { type: Number, required: [true, "Participants coordinates lon is required"], }
+        }
+    }],
+    midpoint: {
+        lat: { type: Number, required: [true, "Midpoint lat is required"], },
+        lon: { type: Number, required: [true, "Midpoint lon is required"], },
+    },
+    searchRadius: {
+        type: Number,
+        required: [true, "Search Radius is required"],
+    },
+    venues: [VenueSchema],
+
+    // accessibilityNeeds: {
+    //     wheelchair: { tyep: Boolean },
+    //     restroom: { tyep: Boolean },
+    //     elevator: { tyep: Boolean },
+    //     quietPlace: { tyep: Boolean }
+    // },
 },{ timestamps: true })
 
 const Plan = (mongoose.models.Plan as mongoose.Model<Plan>) || mongoose.model<Plan>("Plan", PlanSchema)
