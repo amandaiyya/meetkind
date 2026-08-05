@@ -8,6 +8,7 @@ type PlanStore = {
 
     setVenues: (venues: RankedVenue[]) => void;
     setHasHydrated: (hydrate: boolean) => void;
+    clearCurrentPlan: () => void;
 };
 
 export const usePlanStore = create<PlanStore>()(
@@ -17,6 +18,7 @@ export const usePlanStore = create<PlanStore>()(
             hasHydrated: false,
             setVenues: (venues) => set({ venues }),
             setHasHydrated: (hydrate) => set({ hasHydrated: hydrate }),
+            clearCurrentPlan: () => set({ venues: [] }),
         }),
         {
             name: "meetkind-plan-store",
