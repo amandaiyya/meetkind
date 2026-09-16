@@ -7,7 +7,7 @@ declare module "next-auth" {
     interface User {
         _id: string;
         username: string,
-        email?: string,
+        email: string,
         isVerified: boolean;
         oauthProvider?: string | null;
         oauthProviderId?: string | null;
@@ -23,7 +23,7 @@ declare module "next-auth" {
         user: {
             _id: string;
             username: string,
-            email?: string,
+            email: string,
             isVerified: boolean;
             oauthProvider?: string | null;
             oauthProviderId?: string | null;
@@ -41,7 +41,7 @@ declare module "next-auth/jwt" {
     interface JWT {
         _id: string;
         username: string,
-        email?: string,
+        email: string,
         isVerified: boolean;
         oauthProvider?: string | null;
         oauthProviderId?: string | null;

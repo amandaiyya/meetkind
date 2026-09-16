@@ -50,7 +50,8 @@ export async function POST(req: NextRequest) {
                 participantsLocations: [myAddress, ...friendsAddresses],
                 midpoint,
                 searchRadius,
-                venues: rankedVenues
+                venues: rankedVenues,
+                category: venue
             });
         }
 

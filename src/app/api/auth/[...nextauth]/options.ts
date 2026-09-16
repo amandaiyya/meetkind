@@ -67,7 +67,7 @@ export const { handlers } = NextAuth({
     google
   ],
   callbacks: {
-    async jwt({token, user}) {
+    async jwt({token, user, trigger, session}) {
         if(user) {
             token._id = user._id.toString(),
             token.username = user.username as string,
@@ -78,6 +78,16 @@ export const { handlers } = NextAuth({
             token.avatar = user.avatar ?? null,
             token.address = user.address ?? null,
             token.location = user.location ?? null
+        }
+
+        if (trigger === "update" && session) {
+            if (session.username !== undefined) {
+                token.username = session.username;
+            }
+
+            if (session.email !== undefined) {
+                token.email = session.email;
+            }
         }
 
         return token;

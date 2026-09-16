@@ -6,7 +6,6 @@ export type venueFields = {
         lat: number;
         lon: number;
     },
-    dist: number;
     category: string;
 };
 

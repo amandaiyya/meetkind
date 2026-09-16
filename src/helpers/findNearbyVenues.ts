@@ -4,6 +4,10 @@ import ApiError from "@/lib/apiError";
 import envConfig from "@/lib/envConfig";
 import { venueFields } from "@/types/venue";
 
+type venueProps = venueFields & {
+    dist: number;
+}
+
 export default async function findNearbyVenues(
     midpoint: Coordinate,
     venueCategory: string,
@@ -31,7 +35,7 @@ export default async function findNearbyVenues(
         throw new ApiError(400, "Invalid API response");
     }
 
-    const venues: venueFields[] = data?.results.map((venue: any) => {
+    const venues: venueProps[] = data?.results.map((venue: any) => {
         return {
             placeId: venue.id,
             name: venue.poi.name,

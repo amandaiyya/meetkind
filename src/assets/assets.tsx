@@ -48,13 +48,34 @@ export const LocationIcon = ({
 };
 
 export const UserIcon = ({
-    className = "w-3 h-3"
+    className = "w-3 h-3",
+    stroke = "black",
+    strokeWidth = "3.5"
 }: React.SVGProps<SVGSVGElement>) => {
     return (
         <svg className={className} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M33.3346 35V31.6667C33.3346 29.8986 32.6323 28.2029 31.382 26.9526C30.1318 25.7024 28.4361 25 26.668 25H13.3346C11.5665 25 9.87083 25.7024 8.62059 26.9526C7.37035 28.2029 6.66797 29.8986 6.66797 31.6667V35M26.668 11.6667C26.668 15.3486 23.6832 18.3333 20.0013 18.3333C16.3194 18.3333 13.3346 15.3486 13.3346 11.6667C13.3346 7.98477 16.3194 5 20.0013 5C23.6832 5 26.668 7.98477 26.668 11.6667Z" stroke="#001D3D" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M33.3346 35V31.6667C33.3346 29.8986 32.6323 28.2029 31.382 26.9526C30.1318 25.7024 28.4361 25 26.668 25H13.3346C11.5665 25 9.87083 25.7024 8.62059 26.9526C7.37035 28.2029 6.66797 29.8986 6.66797 31.6667V35M26.668 11.6667C26.668 15.3486 23.6832 18.3333 20.0013 18.3333C16.3194 18.3333 13.3346 15.3486 13.3346 11.6667C13.3346 7.98477 16.3194 5 20.0013 5C23.6832 5 26.668 7.98477 26.668 11.6667Z" stroke={stroke} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
     )  
+};
+
+export const UsersIcon = ({
+    className = "w-3 h-3",
+    stroke = "black",
+    strokeWidth = "2.5"
+}: React.SVGProps<SVGSVGElement>) => {
+    return (
+        <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clipPath="url(#clip0_64_58)">
+            <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13M16 3.13C16.8604 3.3503 17.623 3.8507 18.1676 4.55231C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89317 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88M13 7C13 9.20914 11.2091 11 9 11C6.79086 11 5 9.20914 5 7C5 4.79086 6.79086 3 9 3C11.2091 3 13 4.79086 13 7Z" stroke={stroke} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round"/>
+            </g>
+            <defs>
+            <clipPath id="clip0_64_58">
+            <rect width="24" height="24" fill="white"/>
+            </clipPath>
+            </defs>
+        </svg> 
+    )
 };
 
 export const ThumbsupIcon = ({
@@ -198,8 +219,8 @@ export const LoaderIcon = ({
     className = "w-3 h-3"
 }: React.SVGProps<SVGSVGElement>) => {
     return (
-        <svg className={className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke="#FFD60A" stroke-linecap="round" stroke-linejoin="round"
+        <svg className={className} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+            <path stroke="#FFD60A" strokeLinecap="round" strokeLinejoin="round"
             d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0
                 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25
                 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
@@ -214,5 +235,17 @@ export const MailIcon = ({
         <svg className={className} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M36.6654 9.99935C36.6654 8.16602 35.1654 6.66602 33.332 6.66602H6.66536C4.83203 6.66602 3.33203 8.16602 3.33203 9.99935M36.6654 9.99935V29.9993C36.6654 31.8327 35.1654 33.3327 33.332 33.3327H6.66536C4.83203 33.3327 3.33203 31.8327 3.33203 29.9993V9.99935M36.6654 9.99935L19.9987 21.666L3.33203 9.99935" stroke="#001D3D" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>        
+    )  
+};
+
+export const ExitIcon = ({
+    className = "w-3 h-3",
+    stroke = "black",
+    strokeWidth = "3.5"
+}: React.SVGProps<SVGSVGElement>) => {
+    return (
+        <svg className={className} viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.75 31.75H5.08333C4.19928 31.75 3.35143 31.3988 2.72631 30.7737C2.10119 30.1486 1.75 29.3007 1.75 28.4167V5.08333C1.75 4.19928 2.10119 3.35143 2.72631 2.72631C3.35143 2.10119 4.19928 1.75 5.08333 1.75H11.75M23.4167 8.41667L31.75 16.75L23.4167 25.0833M31.75 16.75H11.75" stroke={stroke} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>     
     )  
 };

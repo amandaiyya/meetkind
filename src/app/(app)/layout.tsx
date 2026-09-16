@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import { SessionProvider } from "next-auth/react";
 
 export default function RootLayout({
   children,
@@ -11,7 +12,9 @@ export default function RootLayout({
       <div className="bg-light-secondary noise">
           <main className="noise bg-light-primary min-h-[95vh] shadow-xl flex flex-col">
               <Navbar />
-              {children}
+              <SessionProvider>
+                {children}
+              </SessionProvider>
           </main>
           <Footer />
       </div>

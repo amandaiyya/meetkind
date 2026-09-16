@@ -42,7 +42,7 @@ export interface Plan extends Document{
     midpoint: Coordinate;
     searchRadius: number;
     venues: Venue[];
-
+    category: string;
     // accessibilityNeeds?: AccessibilityNeedsSchema;
 }
 
@@ -154,6 +154,10 @@ const PlanSchema = new Schema<Plan>({
         required: [true, "Search Radius is required"],
     },
     venues: [VenueSchema],
+    category: {
+        type: String,
+        required: [true, "Venue Category is required"],
+    },
 
     // accessibilityNeeds: {
     //     wheelchair: { tyep: Boolean },
