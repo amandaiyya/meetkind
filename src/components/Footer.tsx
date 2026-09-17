@@ -40,7 +40,7 @@ function Footer() {
                         </Link>
                     </li>
                     <li>
-                        <Link href="/profile">
+                        <Link href="/account">
                             Profile
                         </Link>
                     </li>

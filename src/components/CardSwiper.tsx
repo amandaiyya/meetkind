@@ -57,3 +57,5 @@ export default function CardSwiper({
       </div>
   )
 }
+
+// TODO: could improve cardSwiper as one or more cards overflows sometimes

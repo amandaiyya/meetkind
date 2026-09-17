@@ -23,7 +23,7 @@ export default function HistoryCard({
         </li>
         <li className='flex items-center flex-wrap gap-1.5 lg:gap-2.5'>
             <UsersIcon className='#001D3D w-3.5 h-3.5 lg:w-4 lg:h-4'/>
-            <span className='text-sm lg:text-base'>you + {plan.participants} friends</span>
+            <span className='text-sm lg:text-base'>you + {plan.participants - 1} friends</span>
         </li>
       </ul>
     </div>
