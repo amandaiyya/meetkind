@@ -26,8 +26,8 @@ export default function Plan({
             router.replace("/account");
           }}
         >
-          <ArrowLeftIcon className='text-dark-secondary size-4'/>
-          <span className='underline font-semibold text-sm text-dark-secondary'>Go back</span>
+          <ArrowLeftIcon className='text-dark-secondary dark:text-light-primary size-4'/>
+          <span className='underline font-semibold text-sm'>Go back</span>
         </button>
         <CardSwiper venues={data.venues}/>
       </div>

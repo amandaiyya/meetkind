@@ -14,6 +14,15 @@ body {
   font-family: 'Krub', sans-serif;
 }
 
+input::placeholder {
+  color: #000814;
+  opacity: 65%;
+}
+
+.dark input::placeholder {
+  color: #FFD60A;
+}
+
 .noise {
   background-image: url('/noise-background.png');
   background-repeat: repeat;
@@ -38,7 +47,6 @@ body {
   flex-direction: column !important;
   justify-content: center !important;
   align-items: center !important;
-  gap: 4;
   cursor: pointer;
 }
 
@@ -52,7 +60,7 @@ body {
   cursor: pointer;
 
   font-size: 40px;
-  color: #001D3D;
+  /* color: #001D3D; */
 }
 
 .prev {
@@ -75,6 +83,10 @@ body {
   opacity: .35;
 }
 
+.dark .swiper-pagination-bullet {
+  background: #FFD60A !important;
+}
+
 .swiper-pagination-bullet-active {
   opacity: 1;
 }
@@ -94,13 +106,24 @@ body {
   background: #FFD60A;
 }
 
+.dark ::-webkit-scrollbar-track {
+  background: #000814;
+}
+
 ::-webkit-scrollbar-thumb {
-  background: #FFC300;
-  /* border-radius: 100%; */
+  background: #001D3D;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #FFD60A;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: #efb700;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #00162e;
 }
 
 ::-webkit-scrollbar-button {

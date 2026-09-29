@@ -9,10 +9,14 @@ import Button from '@/components/Button';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import * as z from "zod";
-import { EyeCloseIcon, EyeIcon, GoogleIcon, LoaderIcon, MailIcon } from '@/assets/assets';
+import { EyeCloseIcon, EyeIcon, GoogleIcon, LoaderIcon, MailIcon, MeetKindLogo } from '@/assets/assets';
+import { useThemeStore } from '@/stores/theme-store';
+import toast from 'react-hot-toast';
 
 function SigninPage() {
   const router = useRouter();
+
+  const { theme } = useThemeStore();
 
   const [passwordVisibility, setPasswordVisibility] = useState(false);
 
@@ -32,12 +36,13 @@ function SigninPage() {
     });
 
     if(result?.error) {
-      console.log("Login failed. Incorrect or unverified account.")
+      console.log(result);
+      toast.error("Incorrect or unverified account");
     }
 
     if(result?.url) {
       reset();
-      console.log("Logged in successfully.")
+      toast.success("Logged in successfully.");
       router.replace('/');
     }
   }
@@ -49,12 +54,7 @@ function SigninPage() {
   return (
     <main className='noise bg-light-primary dark:bg-dark-tertiary w-screen h-screen p-5 flex items-center gap-10'>
       <section className='hidden sm:block h-full w-full max-w-xl bg-[url("/wholesome.jfif")] bg-no-repeat bg-center bg-cover rounded-2xl p-3 shadow-lg'>
-        <img 
-          width="99px"
-          height="89px" 
-          src="/meetkind.svg"
-          alt="meetkind"
-        />
+        <MeetKindLogo className='w-[99px] h-[66px] text-dark-secondary'/>
       </section>
       <section className='h-full w-full p-5 flex justify-center item-center'>
         <div className="w-full max-w-xl flex flex-col items-center gap-4 md:gap-6">
@@ -66,7 +66,7 @@ function SigninPage() {
                 <div className="w-5">
                   <MailIcon className=''/>
                 </div>
-                <div className="w-[1.5px] h-5 bg-dark-secondary"></div>
+                <div className="w-[1.5px] h-5 bg-dark-secondary dark:bg-light-primary"></div>
                 <input 
                   type="email"
                   {...register("email")}
@@ -91,7 +91,7 @@ function SigninPage() {
                     <EyeIcon className='w-6 h-6'/>
                   )}
                 </div>
-                <div className="w-[1.5px] h-5 bg-dark-secondary"></div>
+                <div className="w-[1.5px] h-5 bg-dark-secondary dark:bg-light-primary"></div>
                 <input 
                   type={passwordVisibility ? "text" : "password"}
                   {...register("password")}
@@ -102,10 +102,10 @@ function SigninPage() {
               </div>
               <p className="text-red-500 text-sm w-full h-2">{errors.password && errors.password.message}</p>
             </div>
-            <Link href="/forgot-password" className="underline text-dark-primary float-right font-semibold block py-2">Forgot Password?</Link>
+            <Link href="/forgot-password" className="underline text-dark-primary dark:text-light-secondary float-right font-semibold block py-2">Forgot Password?</Link>
             <Button
               type="submit"
-              className="primary-dark w-full text-center flex justify-center items-center px-3 py-2"
+              className={`${theme === "dark" ? "primary-light" : "primary-dark"} w-full text-center flex justify-center items-center px-3 py-2`}
               disabled={isSubmitting}
             >
               {isSubmitting ? (
@@ -116,10 +116,10 @@ function SigninPage() {
               ) : "Login"}
             </Button>
           </form>
-          <div className="w-full flex items-center gap-3 text-black/50 md:text-lg font-semibold my-1">
-            <div className="w-auto h-0.5 flex-1 bg-black/50"></div>
+          <div className="w-full flex items-center gap-3 text-black/50 dark:text-light-primary/70 md:text-lg font-semibold my-1">
+            <div className="w-auto h-0.5 flex-1 bg-black/50 dark:bg-light-primary/70"></div>
             <p>Or Continue With</p>
-            <div className="w-auto h-0.5 flex-1 bg-black/50"></div>
+            <div className="w-auto h-0.5 flex-1 bg-black/50 dark:bg-light-primary/70"></div>
           </div>
           <div
             role="button"
@@ -130,7 +130,7 @@ function SigninPage() {
           </div>
           <p className="text-center md:text-lg font-medium">
             Already have an account?{" "}
-            <Link className="underline text-dark-primary font-semibold" href="/sign-up">Signup</Link>
+            <Link className="underline text-dark-primary dark:text-light-secondary font-semibold" href="/sign-up">Signup</Link>
           </p>
         </div>
       </section>

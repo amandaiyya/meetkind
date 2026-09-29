@@ -1,16 +1,20 @@
 "use client";
 
-import { LoaderIcon, MailIcon } from '@/assets/assets';
+import { LoaderIcon, MailIcon, MeetKindLogo } from '@/assets/assets';
 import Button from '@/components/Button';
 import { ForgotPasswordSchema } from '@/schemas/ForgotPasswordSchema';
+import { useThemeStore } from '@/stores/theme-store';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import Link from 'next/link';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import * as z from "zod";
 
 function page() {
+  const { theme } = useThemeStore();
+
   const {
     register,
     handleSubmit,
@@ -28,15 +32,15 @@ function page() {
         const {data} = await axios.post('/api/forgot-password', body);
         if(data.success) {
             reset();
-            console.log(data.message);
+            toast.success(data.message);
         }
     } catch (error) {
         if(axios.isAxiosError(error)) {
             const msg = error.response?.data?.message || "Server Error";
-            console.log(msg);
+            toast.error(msg);
         } else {
             console.log(error);
-            console.log("Password forgot process failed!");
+            toast.error("Password forgot process failed!");
         }
     }
   }
@@ -44,12 +48,7 @@ function page() {
   return (
     <main className='noise bg-light-primary dark:bg-dark-tertiary w-screen h-screen p-5 flex justify-center items-center relative'>
         <div className='absolute top-0 left-0 px-3 py-2 bg-light-primary shadow-sm rounded-md'>
-            <img 
-                width="79px"
-                height="69px" 
-                src="/meetkind.svg"
-                alt="meetkind"
-            />
+            <MeetKindLogo className='w-[79px] h-[52px] text-dark-secondary'/>
         </div>
         <div className="w-full max-w-sm sm:max-w-lg flex flex-col items-center gap-4 md:gap-7">
             <h1 className="text-center text-3xl font-black">Forgot Password ?</h1>
@@ -59,7 +58,7 @@ function page() {
                     <div className="w-5">
                         <MailIcon className=''/>
                     </div>
-                    <div className="w-[1.5px] h-5 bg-dark-secondary"></div>
+                    <div className="w-[1.5px] h-5 bg-dark-secondary dark:bg-light-primary"></div>
                     <input 
                         type="email"
                         {...register("email")}
@@ -71,7 +70,7 @@ function page() {
                 <p className="text-red-500 text-sm text-center w-full h-4 mb-3">{errors.email && errors.email.message}</p>
                 <Button
                     type="submit"
-                    className="primary-dark w-full text-center flex justify-center items-center px-3 py-2"
+                    className={`${theme === "dark" ? "primary-light" : "primary-dark"} w-full text-center flex justify-center items-center px-3 py-2`}
                     disabled={isSubmitting}
                 >
                     {isSubmitting ? (
@@ -85,7 +84,7 @@ function page() {
             <div className="w-full h-0.5 bg-black/50"></div>
             <p className="text-center md:text-lg font-medium">
                 Go back to{" "}
-                <Link className="underline text-dark-primary font-semibold" href="/sign-in">Login</Link>
+                <Link className="underline text-dark-primary dark:text-light-secondary font-semibold" href="/sign-in">Login</Link>
             </p>
         </div>
     </main>

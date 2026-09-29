@@ -1,6 +1,6 @@
 "use client";
 
-import { GithubIcon, HeartIcon, InstagramIcon, LinkedinIcon } from '@/assets/assets';
+import { GithubIcon, HeartIcon, InstagramIcon, LinkedinIcon, MeetKindLogo } from '@/assets/assets';
 import Link from 'next/link';
 import React from 'react';
 
@@ -11,12 +11,7 @@ function Footer() {
         <div className="flex lg:flex-3 flex-col sm:flex-row items-center sm:items-end gap-5">
             <div className="flex-2 space-y-2 relative">
                 <div className="flex justify-center sm:justify-start gap-2.5 lg:mb-3 relative sm:-left-2.5">
-                    <img 
-                        width="79px"
-                        height="69px" 
-                        src="/meetkind.svg"
-                        alt="meetkind"
-                    />
+                    <MeetKindLogo className='w-[79px] h-[52px] text-dark-secondary dark:text-light-primary'/>
                     <div className="flex items-end pb-1.5 gap-2.5">
                         <Link href="https://github.com/amandaiyya">
                             <GithubIcon className='w-5 h-5'/>
@@ -33,7 +28,7 @@ function Footer() {
             </div>
             <div className="flex-1 text-center sm:text-start font-semibold">
                 <h2 className="text-lg xl:text-xl mb-2 sm:mb-3 lg:mb-4">Quick Links</h2>
-                <ul className="text-sm xl:text-base text-dark-primary space-y-1 lg:space-y-2">
+                <ul className="text-sm xl:text-base text-dark-primary dark:text-light-secondary space-y-1 lg:space-y-2">
                     <li>
                         <Link href="/">
                             Home
@@ -45,9 +40,9 @@ function Footer() {
                         </Link>
                     </li>
                     <li>
-                        <Link href="/">
+                        {/* <Link href="/"> */}
                             How it Works
-                        </Link>
+                        {/* </Link> */}
                     </li>
                 </ul>
             </div>
@@ -63,7 +58,7 @@ function Footer() {
             </div>
             <div className="flex-1 lg:flex-none xl:flex-1 text-center sm:text-start font-semibold">
                 <h2 className="text-lg xl:text-xl mb-2 sm:mb-3 lg:mb-4">Legal & Support</h2>
-                <ul className="text-sm xl:text-base text-dark-primary space-y-1 lg:space-y-2">
+                <ul className="text-sm xl:text-base text-dark-primary dark:text-light-secondary space-y-1 lg:space-y-2">
                     <li>Privacy & Data</li>
                     <li>Terms & Conditions</li>
                     <li>Need Help?</li>
@@ -71,9 +66,9 @@ function Footer() {
             </div>
         </div>
       </div>
-      <div className="w-full h-[1px] bg-dark-secondary"></div>
+      <div className="w-full h-[1px] bg-dark-secondary dark:bg-light-primary"></div>
       <div className="text-xs xl:text-sm flex flex-col sm:flex-row gap-1 sm:gap-0 justify-between items-center mt-2.5 sm:mt-4 sm:ml-10 lg:ml-0">
-        <p className="flex-2 lg:flex-none">© 2025 meetkind.  All rights reserved</p>
+        <p className="flex-2 lg:flex-none">© {new Date().getFullYear()} meetkind.  All rights reserved</p>
         <p className="flex flex-1 lg:flex-none items-center gap-1 sm:ml-4">made with <HeartIcon /> for kind meetups.</p>
       </div>
     </footer>

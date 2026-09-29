@@ -11,23 +11,23 @@ export default function PlanCard({
     data: RankedVenue
 }) {
   return (
-    <div className='noise w-fit max-w-md min-h-2/3 px-8 py-6 bg-light-secondary border border-dark-primary shadow-md rounded-xl space-y-6'>
+    <div className='noise w-fit max-w-[364px] min-h-2/3 px-8 py-6 mx-1 bg-light-secondary dark:bg-dark-secondary border border-dark-primary dark:border-dark-primary shadow-md rounded-xl space-y-6'>
       <div className='flex items-center gap-4 flex-wrap'>
         <h2 className='text-xl font-extrabold'><q>{data.name}</q></h2>
         {data.category === "restaurant" ? (
-          <ForkAndKnifeIcon className='w-7 h-7'/>
+          <ForkAndKnifeIcon className='w-7 h-7 text-dark-secondary dark:text-light-primary fill-light-primary dark:fill-dark-secondary'/>
         ) : data.category === "cafe" ? (
-          <CupIconLight className='w-7 h-7'/>
+          <CupIconLight className='w-7 h-7 text-dark-secondary dark:text-light-primary fill-light-primary dark:fill-dark-secondary'/>
         ) : null}
       </div>
       <div className='space-y-2'>
         <h3 className=' font-semibold'>Average Travel Time & Distance</h3>
         <div className='flex items-center gap-4 flex-wrap'>
-          <div className=' shadow-md cursor-pointer border-2 rounded font-semibold border-dark-secondary bg-light-primary text-dark-secondary px-2 py-1 text-center flex items-center text-sm gap-2'>
+          <div className=' shadow-md cursor-pointer border-2 rounded font-semibold border-dark-secondary dark:border-dark-primary bg-light-primary text-dark-secondary px-2 py-1 text-center flex items-center text-sm gap-2'>
             <ClockIcon className='w-4 h-4'/>
             <span  className='w-[6ch] text-start'>{formatTravelTime(data.averageTravelTime)}</span>
           </div>
-          <div className=' shadow-md cursor-pointer border-2 rounded font-semibold border-dark-secondary bg-light-primary text-dark-secondary px-2 py-1 text-center flex items-center text-sm gap-1.5'>
+          <div className=' shadow-md cursor-pointer border-2 rounded font-semibold border-dark-secondary dark:border-dark-primary bg-light-primary text-dark-secondary px-2 py-1 text-center flex items-center text-sm gap-1.5'>
             <LocationIcon className='w-5 h-5'/>
             <span className='w-[7ch] text-start'>{formatTravelDistance(data.averageTravelDistance)}</span>
           </div>
@@ -37,7 +37,7 @@ export default function PlanCard({
         <h3 className='font-semibold'>Travel</h3>
         <ul className='space-y-1.5'>
           {data.routes.map((route, i) => (
-            <li key={data.placeId + `00${i}`} className='w-fit shadow-md cursor-pointer border-2 rounded font-semibold border-dark-secondary bg-light-primary text-dark-secondary px-3 py-1 text-center flex items-center text-sm'>
+            <li key={data.placeId + `00${i}`} className='w-fit shadow-md cursor-pointer border-2 rounded font-semibold border-dark-secondary dark:border-dark-primary bg-light-primary text-dark-secondary px-3 py-1 text-center flex items-center text-sm'>
               <div className='flex items-center gap-2'>
                 <UserIcon className='w-4 h-4'/>
                 <span className='w-[9ch] text-start'>{route.userIndex === 0 ? "you" : `friend ${route.userIndex}`}</span>
@@ -50,7 +50,7 @@ export default function PlanCard({
       </div>
       <div className='flex items-center gap-3 flex-wrap'>
         <h3 className='font-semibold text-lg'>Fairness Meter - {scoreToPercentage(data.score)}%</h3>
-        {scoreToPercentage(data.score) >= 90 && (<ThumbsupIcon className='w-4 h-4'/>)}
+        {scoreToPercentage(data.score) >= 90 && (<ThumbsupIcon className='text-dark-secondary fill-light-primary w-4 h-4'/>)}
       </div>
       <div className='flex items-center gap-3 flex-wrap'>
         <LocationIcon className='w-6.5 h-6.5'/>

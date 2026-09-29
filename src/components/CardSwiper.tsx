@@ -19,7 +19,7 @@ export default function CardSwiper({
   return (
     <div className="slider-wrapper">
 
-        <button className="slider-btn prev">
+        <button className="slider-btn text-dark-secondary dark:text-light-primary prev">
           &#8249;
         </button>
 
@@ -56,6 +56,4 @@ export default function CardSwiper({
 
       </div>
   )
-}
-
-// TODO: could improve cardSwiper as one or more cards overflows sometimes
+};

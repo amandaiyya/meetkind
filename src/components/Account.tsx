@@ -7,6 +7,7 @@ import { Session } from "next-auth";
 import axios from 'axios';
 import { HistoryCardPlan } from '@/types/plan';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 type ProfileProps = {
   user: Session['user'];
@@ -53,10 +54,10 @@ export default function Account({
     } catch (error) {
       if(axios.isAxiosError(error)) {
         const msg = error.response?.data?.message || "Server Error";
-        console.log(msg);
+        toast.error(msg);
       } else {
         console.log(error);
-        console.log("Failed fetching next page!");
+        toast.error("Failed fetching next page!");
       }
     } finally {
         loadingRef.current = false;
@@ -89,10 +90,10 @@ export default function Account({
 
   return (
     <div className="flex-1 px-4 py-8 md:py-10 sm:px-6 xl:px-10 flex flex-col max-[768px]:items-center md:flex-row gap-5 lg:gap-8">
-      <section className='w-full max-w-md md:max-w-none bg-light-primary shadow-md rounded-xl p-8 noise'>
+      <section className='w-full max-w-md md:max-w-none bg-light-primary dark:bg-dark-secondary border dark:border-dark-primary shadow-md rounded-xl p-8 noise'>
         <Profile user={user}/>
       </section>
-      <section className='flex flex-col w-full max-w-md md:max-w-none bg-light-primary shadow-md rounded-xl p-8 noise'>
+      <section className='flex flex-col w-full max-w-md md:max-w-none bg-light-primary dark:bg-dark-secondary border dark:border-dark-primary shadow-md rounded-xl p-8 noise'>
         <h2 className='font-semibold text-lg lg:text-xl mb-6 lg:mb-8'>History</h2>
         <div className='flex-1 overflow-y-auto no-scrollbar'>
           <ul className='max-h-[300px] md:h-0 flex flex-col gap-5'>

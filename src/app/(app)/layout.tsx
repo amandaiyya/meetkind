@@ -9,8 +9,8 @@ export default function RootLayout({
 }>) {
   return (
     <>
-      <div className="bg-light-secondary noise">
-          <main className="noise bg-light-primary min-h-[95vh] shadow-xl flex flex-col">
+      <div className="bg-light-secondary dark:bg-dark-secondary noise">
+          <main className="noise bg-light-primary dark:bg-dark-tertiary min-h-[95vh] shadow-xl flex flex-col">
               <SessionProvider>
                 <Navbar />
                 {children}

@@ -38,8 +38,8 @@ export default function page() {
             router.replace("/plan");
           }}
         >
-          <ArrowLeftIcon className='text-dark-secondary size-4'/>
-          <span className='underline font-semibold text-sm text-dark-secondary'>Plan another</span>
+          <ArrowLeftIcon className='text-dark-secondary dark:text-light-primary size-4'/>
+          <span className='underline font-semibold text-sm text-dark-secondary dark:text-light-primary'>Plan another</span>
         </button>
         <CardSwiper venues={venues}/>
       </div>

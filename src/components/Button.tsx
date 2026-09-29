@@ -16,8 +16,8 @@ function Button({
       className={`shadow-md cursor-pointer border-2 rounded font-semibold outline-none ${className}
         ${className?.includes("primary-dark") && "border-dark-secondary bg-dark-primary text-light-primary"}
         ${className?.includes("primary-light") && "border-dark-primary bg-light-primary text-dark-secondary"}
-        ${className?.includes("secondary-dark") && "border-dark-secondary bg-light-primary text-dark-secondary"}
-        ${className?.includes("secondary-light") && "border-light-primary bg-dark-tertiary text-light-primary"}
+        ${className?.includes("secondary-dark") && "border-dark-secondary text-dark-secondary"}
+        ${className?.includes("secondary-light") && "border-light-primary text-light-primary"}
       `}
       {...props}
     >

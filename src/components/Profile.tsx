@@ -10,6 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Session } from "next-auth";
 import { signOut, useSession } from 'next-auth/react';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 export default function Profile({
   user
@@ -38,7 +39,7 @@ export default function Profile({
     try {
       const { data } = await axios.put("/api/edit-profile", body);
       if(data.success) {
-        console.log(data.message);
+        toast.success(data.message);
         await update({
           username: data.data.username,
           email: data.data.email,
@@ -48,10 +49,10 @@ export default function Profile({
     } catch (error) {
       if(axios.isAxiosError(error)) {
         const msg = error.response?.data?.message || "Server Error";
-        console.log(msg);
+        toast.error(msg);
       } else {
         console.log(error);
-        console.log("Something went wrong!");
+        toast.error("Something went wrong!");
       }
     }
   }
@@ -73,7 +74,7 @@ export default function Profile({
     <form onSubmit={handleSubmit(handleEdit)} className='space-y-4 lg:space-y-5'>
       <div className='flex items-center gap-2 md:gap-4 lg:gap-6'>
           <div className='w-10 h-10 lg:w-15 lg:h-15 p-2 lg:p-3 shadow-md rounded-full border-2 border-dark-secondary bg-dark-primary flex items-center justify-center'>
-              <UserIcon className='w-full h-full' strokeWidth='2.5' stroke='#FFD60A'/>
+              <UserIcon className='w-full h-full text-light-primary'/>
           </div>
         <div className='flex gap-1 md:gap-2 flex-wrap'>
             {editProfile &&
@@ -84,7 +85,7 @@ export default function Profile({
               >
                 {isSubmitting ? (
                   <>
-                    <LoaderIcon className="w-4 sm:w-5 mr-2 animate-spin"/>
+                    <LoaderIcon className="w-4 sm:w-5 mr-2 animate-spin inline-block"/>
                     <span>Saving</span>
                   </>
                 ) : "Save"}
@@ -94,7 +95,7 @@ export default function Profile({
               <Button 
               type="button"
               onClick={() => setEditProfile(true)}
-              className='primary-dark text-sm lg:text-base px-3 py-1'
+              className='primary-dark border dark:border-dark-primary! text-sm lg:text-base px-3 py-1'
               >
                 Edit Profile
               </Button>
@@ -103,12 +104,12 @@ export default function Profile({
             <Button 
               type='button'
               onClick={() => editProfile ? handleCancel() : handleLogout()}
-              className='secondary-dark text-sm lg:text-base px-3 py-1 flex items-center gap-2'
+              className='primary-light text-sm lg:text-base px-3 py-1 flex items-center gap-2'
             >
               {editProfile ? "Cancel" : (
                 <>
                   <span>Logout</span>
-                  <ExitIcon className='w-3 h-3 lg:w-4 lg:h-4 hidden min-[500px]:block' stroke='#001D3D'/>
+                  <ExitIcon className='w-3 h-3 lg:w-4 lg:h-4 hidden min-[500px]:block'/>
                 </>
               )}
             </Button>

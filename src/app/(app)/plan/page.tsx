@@ -12,6 +12,8 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { usePlanStore } from '@/stores/plan-store';
 import { LoaderIcon } from '@/assets/assets';
+import { useThemeStore } from '@/stores/theme-store';
+import toast from 'react-hot-toast';
 
 const venueCategory = {
   cafe: "cafe",
@@ -20,6 +22,8 @@ const venueCategory = {
 
 export default function Plan() {
   const router = useRouter();
+
+  const { theme } = useThemeStore();
 
   const { setVenues } = usePlanStore();
 
@@ -59,17 +63,17 @@ export default function Plan() {
     try {
       const {data} = await axios.post("/api/plan", body);
       if(data.success) {
-        console.log(data.message);
+        toast.success(data.message);
         setVenues(data.data);
         router.push("/results");
       }
     } catch (error) {
       if(axios.isAxiosError(error)) {
         const msg = error.response?.data?.message || "Server Error";
-        console.log(msg);
+        toast.error(msg);
       } else {
         console.log(error);
-        console.log("Planning Failed!");
+        toast.error("Planning Failed!");
       }
     }
   }
@@ -98,14 +102,14 @@ export default function Plan() {
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-5 items-center justify-center w-full h-full"
         >
-          <div className='noise w-full max-w-md min-h-2/3 p-4 bg-light-secondary border border-dark-primary shadow-md rounded-xl'>
+          <div className='noise w-full max-w-md min-h-2/3 p-4 bg-light-secondary dark:bg-dark-secondary border border-dark-primary shadow-md rounded-xl'>
               <ul>
                 <li className="flex flex-wrap items-center gap-4 relative mb-3">
                     <h3 className="font-semibold text-sm">venue to Search</h3>
                     <Button
                       type='button'
                       onClick={() => setShowOptions(true)}
-                      className='primary-dark py-2 px-3 text-sm'
+                      className={`${theme === "dark" ? "primary-light" : "primary-dark"} py-2 px-3 text-sm`}
                     >
                       {getValues('venue')}
                     </Button>
@@ -116,7 +120,7 @@ export default function Plan() {
 
                     {showOptions && (
                       <div className='bg-black/50 fixed inset-0 z-10 w-screen h-screen p-4 flex justify-center items-center'>
-                        <div ref={wrapperRef} className="p-4 space-y-3 bg-light-primary border border-dark-primary shadow-md rounded-xl text-center">
+                        <div ref={wrapperRef} className="p-4 space-y-3 bg-light-primary dark:bg-dark-secondary border border-dark-secondary dark:border-dark-primary shadow-md rounded-xl text-center">
                             <h2 className="text-lg font-semibold">Where to meet?</h2>
                             <div className='flex flex-col items-center gap-2 text-sm font-medium'>
                               <div 
@@ -125,7 +129,7 @@ export default function Plan() {
                                   setShowOptions(false);
                                   setValue("venue", venueCategory.cafe);
                                 }}
-                                className="px-1 py-2 rounded-md bg-light-secondary w-full border border-dark-secondary cursor-pointer shadow-md"
+                                className="px-1 py-2 rounded-md bg-light-secondary dark:bg-dark-primary w-full border border-dark-secondary dark:border-light-primary cursor-pointer shadow-md"
                               >
                                   {venueCategory.cafe}
                               </div>
@@ -135,7 +139,7 @@ export default function Plan() {
                                   setShowOptions(false);
                                   setValue("venue", venueCategory.restaurants);
                                 }}
-                                className="px-1 py-2 rounded-md bg-light-secondary w-full border border-dark-secondary cursor-pointer shadow-md"
+                                className="px-1 py-2 rounded-md bg-light-secondary dark:bg-dark-primary w-full border border-dark-secondary dark:border-light-primary cursor-pointer shadow-md"
                               >
                                   {venueCategory.restaurants}
                               </div>
@@ -184,13 +188,13 @@ export default function Plan() {
               
               <Button 
                 type="button"
-                className="text-xs px-3 py-2 mt-2 border-dashed border-dark-primary text-dark-primary"
+                className="text-xs px-3 py-2 mt-2 border-dashed border-dark-primary dark:border-light-primary text-dark-primary dark:text-light-primary"
                 onClick={() => append({address: "", coordinates: {lat: 0, lon: 0}})}
               >+ Add another friend</Button>
           </div>
           <Button
             type="submit"
-            className='primary-dark px-4 py-1 text-center flex items-center'
+            className={`${theme === "dark" ? "primary-light" : "primary-dark"} px-4 py-1 text-center flex items-center`}
             disabled={isSubmitting}
           >
             {isSubmitting ? (

@@ -1,4 +1,5 @@
 import { LocationIcon } from "@/assets/assets";
+import { useThemeStore } from "@/stores/theme-store";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { FieldErrors, UseFormRegister, UseFormSetValue, get } from "react-hook-form";
@@ -37,6 +38,8 @@ export default function AddressAutocomplete({
     className = "",
     placeholder = "Enter address",
 }: AddressAutocompleteProps){
+    const { theme } = useThemeStore();
+
     const wrapperRef = useRef<HTMLDivElement | null>(null);
 
     const [address, setAddress] = useState("");
@@ -130,7 +133,11 @@ export default function AddressAutocomplete({
 
     return (
         <div ref={wrapperRef} className={`relative ${className}`}>
-            <div className={`${selected && "bg-light-primary"} border-2 border-dark-secondary p-2 rounded-md flex items-center gap-1 text-xs font-semibold shadow-sm`}>
+            <div 
+              className={`
+                ${selected ? theme === "dark" ? "bg-dark-primary" : "bg-light-primary" : "bg-none"} 
+                border-2 border-dark-secondary dark:border-light-primary p-2 rounded-md flex items-center gap-1 text-xs font-semibold shadow-sm`}
+              >
                 <LocationIcon className="w-[18px] h-[18px]"/>
                 <input  
                     required
@@ -157,7 +164,7 @@ export default function AddressAutocomplete({
             )}
 
             {open && results.length > 0 && (
-                <ul className="w-full absolute z-[9] border border-dark-secondary bg-dark-secondary space-y-[1px] shadow-lg">
+                <ul className="w-full absolute z-[9] border border-dark-secondary dark:border-light-primary bg-dark-secondary dark:bg-light-primary space-y-[1px] shadow-lg">
                     {results.map((item) => {
                         const p = item.properties;
 
@@ -174,7 +181,7 @@ export default function AddressAutocomplete({
                               aria-required
                               key={`${p.osm_type}-${p.osm_id}`}
                               onClick={() => handleSelect(item, label)}
-                              className="p-1 bg-light-primary text-[10px] cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis"
+                              className="p-1 bg-light-primary dark:bg-dark-primary text-[10px] cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis"
                             >
                                 {label}
                             </li>

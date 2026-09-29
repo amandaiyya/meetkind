@@ -1,14 +1,16 @@
 "use client";
 
-import { EyeCloseIcon, EyeIcon, LoaderIcon } from '@/assets/assets';
+import { EyeCloseIcon, EyeIcon, LoaderIcon, MeetKindLogo } from '@/assets/assets';
 import Button from '@/components/Button';
 import { ResetPasswordSchema } from '@/schemas/ResetPasswordSchema';
+import { useThemeStore } from '@/stores/theme-store';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import * as z from "zod";
 
 function page() {
@@ -21,6 +23,8 @@ function page() {
 
   const [newPasswordVisibility, setNewPasswordVisibility] = useState(false);
   const [confirmPasswordVisibility, setConfirmPasswordVisibility] = useState(false);
+
+  const { theme } = useThemeStore();
 
   const {
     handleSubmit,
@@ -44,15 +48,15 @@ function page() {
           reset();
           setNewPassword("");
           setConfirmPassword("");
-          console.log(data.message);
+          toast.success(data.message);
         }
     } catch (error) {
         if(axios.isAxiosError(error)) {
             const msg = error.response?.data?.message || "Server Error";
-            console.log(msg);
+            toast.error(msg);
         } else {
             console.log(error);
-            console.log("Password reset failed!")
+            toast.error("Password reset failed!")
         }
     }
   }
@@ -78,12 +82,7 @@ function page() {
   return (
     <main className='noise bg-light-primary dark:bg-dark-tertiary w-screen h-screen p-5 flex justify-center items-center relative'>
         <div className='absolute top-0 left-0 px-3 py-2 bg-light-primary shadow-sm rounded-md'>
-            <img 
-                width="79px"
-                height="69px" 
-                src="/meetkind.svg"
-                alt="meetkind"
-            />
+            <MeetKindLogo className='w-[79px] h-[52px] text-dark-secondary'/>
         </div>
         <div className="w-full max-w-sm sm:max-w-lg flex flex-col items-center gap-4 md:gap-7">
             <h1 className="text-center text-3xl font-black">Reset Password</h1>
@@ -102,7 +101,7 @@ function page() {
                         <EyeIcon className='w-6 h-6'/>
                       )}
                     </div>
-                    <div className="w-[1.5px] h-5 bg-dark-secondary"></div>
+                    <div className="w-[1.5px] h-5 bg-dark-secondary dark:bg-light-primary"></div>
                     <input 
                       type={newPasswordVisibility ? "text" : "password"}
                       className="flex-1 outline-none font-semibold" 
@@ -128,7 +127,7 @@ function page() {
                         <EyeIcon className='w-6 h-6'/>
                       )}
                     </div>
-                    <div className="w-[1.5px] h-5 bg-dark-secondary"></div>
+                    <div className="w-[1.5px] h-5 bg-dark-secondary dark:bg-light-primary"></div>
                     <input 
                       type={confirmPasswordVisibility ? "text" : "password"}
                       className="flex-1 outline-none font-semibold" 
@@ -142,7 +141,7 @@ function page() {
                 </div>
                 <Button
                     type="submit"
-                    className="primary-dark w-full text-center flex justify-center items-center mt-2 px-3 py-2"
+                    className={`${theme === "dark" ? "primary-light" : "primary-dark"} w-full text-center flex justify-center items-center mt-2 px-3 py-2`}
                     disabled={isSubmitting}
                 >
                     {isSubmitting ? (
@@ -156,7 +155,7 @@ function page() {
             <div className="w-full h-0.5 bg-black/50"></div>
             <p className="text-center md:text-lg font-medium">
                 Go back to{" "}
-                <Link className="underline text-dark-primary font-semibold" href="/sign-in">Login</Link>
+                <Link className="underline text-dark-primary dark:text-light-secondary font-semibold" href="/sign-in">Login</Link>
             </p>
         </div>
     </main>
