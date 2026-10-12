@@ -27,7 +27,7 @@ export async function getPlans(page: number) {
   .lean();
 
   return {
-    plans: plans?.map((p: any) => ({
+    plans: plans?.map((p) => ({
         _id: p._id?.toString(),
         userId: p.userId?.toString(),
         category: p.category,

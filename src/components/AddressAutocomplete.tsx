@@ -1,15 +1,17 @@
+"use client";
+
 import { LocationIcon } from "@/assets/assets";
 import { useThemeStore } from "@/stores/theme-store";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
-import { FieldErrors, UseFormRegister, UseFormSetValue, get } from "react-hook-form";
+import { FieldErrors, FieldValues, Path, PathValue, UseFormRegister, UseFormSetValue, get } from "react-hook-form";
 import { useDebouncedCallback } from "use-debounce";
 
-interface AddressAutocompleteProps {
-    name: string;
-    register: UseFormRegister<any>;
-    setValue: UseFormSetValue<any>;
-    errors: FieldErrors<any>;
+interface AddressAutocompleteProps<T extends FieldValues> {
+    name: Path<T>;
+    register: UseFormRegister<T>;
+    setValue: UseFormSetValue<T>;
+    errors: FieldErrors<T>;
     className?: string;
     placeholder: string;
 }
@@ -30,14 +32,14 @@ export interface PhotonFeatures {
     }
 }
 
-export default function AddressAutocomplete({
+export default function AddressAutocomplete<T extends FieldValues>({
     name,
     register,
     setValue,
     errors,
     className = "",
     placeholder = "Enter address",
-}: AddressAutocompleteProps){
+}: AddressAutocompleteProps<T>){
     const { theme } = useThemeStore();
 
     const wrapperRef = useRef<HTMLDivElement | null>(null);
@@ -93,7 +95,7 @@ export default function AddressAutocomplete({
             setValue(name, {
                 address: "",
                 coordinates: {}
-            })
+            } as PathValue<T, Path<T>>);
         }
     }
 
@@ -107,7 +109,7 @@ export default function AddressAutocomplete({
                 lat: item.geometry.coordinates[1],
                 lon: item.geometry.coordinates[0]
             }
-        },{
+        } as PathValue<T, Path<T>>,{
             shouldDirty: true,
             shouldValidate: true
         })
@@ -178,7 +180,6 @@ export default function AddressAutocomplete({
 
                         return (
                             <li
-                              aria-required
                               key={`${p.osm_type}-${p.osm_id}`}
                               onClick={() => handleSelect(item, label)}
                               className="p-1 bg-light-primary dark:bg-dark-primary text-[10px] cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis"

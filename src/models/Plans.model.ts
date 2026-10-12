@@ -2,11 +2,6 @@ import mongoose, { Schema, Document } from "mongoose";
 import { Coordinate } from "@/helpers/midpointCalculator";
 import "./User.model";
 
-// import { AccessibilityNeedsSchema } from "@/schemas/AccessibilityNeedsSchema";
-// import * as z from 'zod';
-
-// type AccessibilityNeedsSchema = z.infer<typeof AccessibilityNeedsSchema>
-
 export interface Venue extends Document {
     placeId: string;
     name: string;
@@ -26,11 +21,6 @@ export interface Venue extends Document {
     normalizedTotalTravelTime: number;
     normalizedTravelTimeStdDev: number;
     score: number;
-
-    // accessibilities?: AccessibilityNeedsSchema;
-    // ratings?: number;
-    // reviews?: string[];
-    // photos?: string[];
 }
 
 export interface Plan extends Document{
@@ -43,7 +33,7 @@ export interface Plan extends Document{
     searchRadius: number;
     venues: Venue[];
     category: string;
-    // accessibilityNeeds?: AccessibilityNeedsSchema;
+    createdAt: Date;
 }
 
 const VenueSchema = new Schema<Venue>({
@@ -115,18 +105,6 @@ const VenueSchema = new Schema<Venue>({
         type: Number,
         required: [true, "Venue score is required"],
     },
-
-    // accessibilities: {
-    //     wheelchair: { tyep: Boolean },
-    //     restroom: { tyep: Boolean },
-    //     elevator: { tyep: Boolean },
-    //     quietPlace: { tyep: Boolean }
-    // },
-    // ratings: {
-    //     type: Number,
-    // },
-    // reviews: [String],
-    // photos: [String],
 }, { timestamps: true })
 
 const PlanSchema = new Schema<Plan>({
@@ -158,13 +136,6 @@ const PlanSchema = new Schema<Plan>({
         type: String,
         required: [true, "Venue Category is required"],
     },
-
-    // accessibilityNeeds: {
-    //     wheelchair: { tyep: Boolean },
-    //     restroom: { tyep: Boolean },
-    //     elevator: { tyep: Boolean },
-    //     quietPlace: { tyep: Boolean }
-    // },
 },{ timestamps: true })
 
 const Plan = (mongoose.models.Plan as mongoose.Model<Plan>) || mongoose.model<Plan>("Plan", PlanSchema)

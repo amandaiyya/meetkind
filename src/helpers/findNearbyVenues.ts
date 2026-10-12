@@ -4,6 +4,21 @@ import ApiError from "@/lib/apiError";
 import envConfig from "@/lib/envConfig";
 import { venueFields } from "@/types/venue";
 
+type TomTomApiResponse = {
+    id: string;
+    dist: number;
+    poi: {
+        name: string;
+        categorySet: {
+            id: string;
+        }[];
+    };
+    address: {
+        freeformAddress: string;
+    };
+    position: Coordinate;
+}
+
 type venueProps = venueFields & {
     dist: number;
 }
@@ -35,7 +50,7 @@ export default async function findNearbyVenues(
         throw new ApiError(400, "Invalid API response");
     }
 
-    const venues: venueProps[] = data?.results.map((venue: any) => {
+    const venues: venueProps[] = data?.results.map((venue: TomTomApiResponse) => {
         return {
             placeId: venue.id,
             name: venue.poi.name,

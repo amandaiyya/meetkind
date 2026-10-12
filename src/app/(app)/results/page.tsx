@@ -6,7 +6,7 @@ import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
 
-export default function page() {
+export default function Page() {
   const router = useRouter();
   const { venues, hasHydrated, clearCurrentPlan } = usePlanStore();
 

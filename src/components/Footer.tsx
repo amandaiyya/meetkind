@@ -24,17 +24,17 @@ function Footer() {
                         </Link>
                     </div>
                 </div>
-                <p className="text-center sm:text-start max-w-[33ch] font-semibold text-sm xl:text-base">A platform to help people of all abilities meet at places that are comfortable, accessible, and kind.</p>
+                <p className="text-center sm:text-start max-w-[33ch] font-semibold text-sm xl:text-base">A platform that helps groups find a meeting place that&apos;s fair, convenient, and kind for everyone.</p>
             </div>
             <div className="flex-1 text-center sm:text-start font-semibold">
                 <h2 className="text-lg xl:text-xl mb-2 sm:mb-3 lg:mb-4">Quick Links</h2>
                 <ul className="text-sm xl:text-base text-dark-primary dark:text-light-secondary space-y-1 lg:space-y-2">
-                    <li>
+                    <li className='hover:underline'>
                         <Link href="/">
                             Home
                         </Link>
                     </li>
-                    <li>
+                    <li className='hover:underline'>
                         <Link href="/account">
                             Profile
                         </Link>
@@ -51,9 +51,9 @@ function Footer() {
             <div className="flex-2 text-center sm:text-start font-semibold">
                 <h2 className="text-lg xl:text-xl mb-2 sm:mb-3 lg:mb-4">Features</h2>
                 <ul className="text-xs xl:text-base sm:text-sm space-y-1 lg:space-y-2">
-                    <li>Accessible Midpoint</li>
-                    <li>Multi-Transport Support</li>
-                    <li>Custom Needs Input</li>
+                    <li>Fair Midpoint</li>
+                    <li>Travel Comparison</li>
+                    <li>Smart Venue Ranking</li>
                 </ul>
             </div>
             <div className="flex-1 lg:flex-none xl:flex-1 text-center sm:text-start font-semibold">

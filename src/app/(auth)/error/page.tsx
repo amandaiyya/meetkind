@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import React from 'react';
+import React, { Suspense } from 'react';
 
 const errorMessages: Record<string, string> = {
     OAuthAccountNotLinked: "This email is already registered using a different method.",
@@ -12,7 +12,7 @@ const errorMessages: Record<string, string> = {
     default: "Something went wrong. Please try again."
 }
 
-function ErrorPage() {
+function ErrorPageComponent() {
   const params = useSearchParams();
   const error = params.get("error");
   const message = errorMessages[error!] ?? errorMessages.default;
@@ -27,4 +27,14 @@ function ErrorPage() {
   )
 }
 
-export default ErrorPage;
+export default function ErrorPage() {
+  return (
+    <Suspense fallback={
+      <main className="noise bg-light-primary dark:bg-dark-tertiary w-screen h-screen p-5 flex flex-col justify-center items-center gap-4">
+          <div className='text-sm sm:text-base text-center font-semibold'>Loading...</div>
+      </main>
+    }>
+      <ErrorPageComponent />
+    </Suspense>
+  );
+};

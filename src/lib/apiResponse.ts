@@ -1,11 +1,11 @@
-export interface apiResponse<T = any> {
+export interface apiResponse<T = unknown> {
     statusCode: number;
     success: boolean;
     data: T | null;
     message: string;
 }
 
-class ApiResponse<T = any> implements apiResponse<T>{
+class ApiResponse<T = unknown> implements apiResponse<T>{
     statusCode: number;
     data: T | null;
     message: string;

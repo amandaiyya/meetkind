@@ -73,8 +73,12 @@ export default function Profile({
   return (
     <form onSubmit={handleSubmit(handleEdit)} className='space-y-4 lg:space-y-5'>
       <div className='flex items-center gap-2 md:gap-4 lg:gap-6'>
-          <div className='w-10 h-10 lg:w-15 lg:h-15 p-2 lg:p-3 shadow-md rounded-full border-2 border-dark-secondary bg-dark-primary flex items-center justify-center'>
-              <UserIcon className='w-full h-full text-light-primary'/>
+          <div className='w-10 h-10 lg:w-15 lg:h-15 shadow-md rounded-full border-2 border-dark-secondary dark:border-dark-tertiary bg-dark-primary flex items-center justify-center'>
+              {user?.avatar ? (
+                <img alt='meetkind' src={user.avatar} className='rounded-full'/>
+              ) : (
+                <UserIcon className='p-2 lg:p-3 w-full h-full text-light-primary'/>
+              )}
           </div>
         <div className='flex gap-1 md:gap-2 flex-wrap'>
             {editProfile &&

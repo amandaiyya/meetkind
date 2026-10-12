@@ -34,7 +34,7 @@ export default function Home() {
   return (
     <section className="flex-1 px-4 py-3 sm:px-6 xl:px-10 text-center relative">
       <h1 className="text-4xl sm:text-5xl xl:text-6xl mt-26">Meet where Everyone can</h1>
-      <h2 className="text-lg sm:text-2xl xl:text-3xl mt-5 mb-6">let’s find a accessible midway!</h2>
+      <h2 className="text-lg sm:text-2xl xl:text-3xl mt-5 mb-6">let&apos;s find a fair midway!</h2>
       <Button 
         className={`${theme === "dark" ? "primary-light" : "primary-dark"} px-3 py-1 lg:text-lg`}
         onClick={() => router.push("/plan")}

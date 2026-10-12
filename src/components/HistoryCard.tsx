@@ -11,7 +11,7 @@ export default function HistoryCard({
   plan: HistoryCardPlan;
 }) {
   return (
-    <div className='w-full space-y-3 bg-light-secondary dark:bg-light-primary border border-dark-secondary dark:text-dark-secondary cursor-pointer rounded-xl p-3 sm:p-4 md:p-5 shadow-md'>
+    <div className='w-full space-y-3 bg-light-primary border border-dark-secondary dark:text-dark-secondary cursor-pointer rounded-xl p-3 sm:p-4 md:p-5 shadow-md'>
       <div className='flex justify-between items-center'>
         <h3 className='font-semibold lg:text-lg'><q>{plan.category}</q></h3>
         <h4 className='text-xs lg:text-sm font-semibold'>{formatDate(plan.createdAt)}</h4>

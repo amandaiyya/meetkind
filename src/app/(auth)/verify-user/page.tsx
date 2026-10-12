@@ -8,12 +8,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useRef } from 'react';
+import React, { Suspense, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import * as z from "zod";
 
-function page() {
+function VerifyUser() {
   const queryParams = useSearchParams();
   const email = queryParams.get("email") ?? "";
 
@@ -129,4 +129,19 @@ function page() {
   )
 }
 
-export default page
+export default function VerifyUserPage() {
+  return (
+    <Suspense fallback={
+      <main className='noise bg-light-primary dark:bg-dark-tertiary w-screen h-screen p-5 flex justify-center items-center relative'>
+        <div className='absolute top-0 left-0 px-3 py-2 bg-light-primary shadow-sm rounded-md'>
+            <MeetKindLogo className='w-[79px] h-[52px] text-dark-secondary'/>
+        </div>
+        <div className="w-full max-w-sm sm:max-w-lg flex flex-col items-center gap-4 md:gap-7">
+          <div className='text-sm sm:text-base font-semibold text-center'>Loading...</div>
+        </div>
+      </main>
+    }>
+      <VerifyUser />
+    </Suspense>
+  );
+};

@@ -8,12 +8,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import * as z from "zod";
 
-function page() {
+function ResetPassword() {
   const queryParams = useSearchParams();
   const id = queryParams.get("id") ?? "";
   const token = queryParams.get("token") ?? "";
@@ -162,4 +162,19 @@ function page() {
   )
 }
 
-export default page;
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={
+      <main className='noise bg-light-primary dark:bg-dark-tertiary w-screen h-screen p-5 flex justify-center items-center relative'>
+        <div className='absolute top-0 left-0 px-3 py-2 bg-light-primary shadow-sm rounded-md'>
+            <MeetKindLogo className='w-[79px] h-[52px] text-dark-secondary'/>
+        </div>
+        <div className="w-full max-w-sm sm:max-w-lg flex flex-col items-center gap-4 md:gap-7">
+          <div className='text-sm sm:text-base text-center font-semibold'>Loading...</div>
+        </div>
+      </main>
+    }>
+      <ResetPassword />
+    </Suspense>
+  );
+}

@@ -12,7 +12,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import * as z from "zod";
 
-function page() {
+function ForgotPasswordPage() {
   const { theme } = useThemeStore();
 
   const {
@@ -91,4 +91,4 @@ function page() {
   )
 }
 
-export default page;
+export default ForgotPasswordPage;
